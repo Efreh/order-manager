@@ -1,16 +1,31 @@
 package com.efreh.order_manager.controllers;
 
+import com.efreh.order_manager.dao.EmployeeRepository;
+import com.efreh.order_manager.entity.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 
 @Controller
 public class WelcomeController {
-    @GetMapping("/welcome")
-    public String welcome(@AuthenticationPrincipal UserDetails userDetails, Model model){
-        model.addAttribute("username",userDetails.getUsername());
-        return "welcome";
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+    @GetMapping("/")
+    public String index(@AuthenticationPrincipal UserDetails userDetails, Model model){
+        Employee employee = employeeRepository.findById(1).orElse(null);
+        model.addAttribute("name",employee.getName());
+        model.addAttribute("otchestvo",employee.getOtchestvo());
+        model.addAttribute("surname",employee.getSurname());
+        model.addAttribute("department",employee.getDepartment());
+        model.addAttribute("sector",employee.getSector());
+        model.addAttribute("work_center",employee.getWork_center());
+        model.addAttribute("job_title",employee.getJob_title());
+        return "index";
     }
 }
