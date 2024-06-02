@@ -1,5 +1,6 @@
 package com.efreh.order_manager.entity.order;
 
+import com.efreh.order_manager.entity.Employee;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -12,17 +13,23 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orderId")
     private int orderId;
+
     @Column(name = "date", nullable = false)
     private LocalDate date;
+
     @Column(name = "workShift", nullable = false, length = 1)
     private int workShift;
-    @Column(name = "employeeId", nullable = false)
+
+    @Column(name = "employeeId")
     private int employeeId;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "orderIdInPos")
     private List<Position> positionList;
+
     @Column(name = "masterCheck", columnDefinition = "boolean default false")
     private boolean masterCheck;
+
     @Column(name = "otkControllerCheck", columnDefinition = "boolean default false")
     private boolean otkControllerCheck;
 
