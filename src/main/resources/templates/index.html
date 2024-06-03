@@ -2,53 +2,76 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Моя страница</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <style>
-        /* Дополнительные стили */
         body {
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #FFDAB9; /* Персиковый цвет */
         }
         .container {
             display: flex;
-            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .user-info, .orders-list {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .user-info {
+            width: 20%;
+        }
+        .orders-list {
+            width: 75%;
+        }
+        .footer-buttons {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
         }
-        .user-details {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        .logout-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-        .action-buttons {
-            margin-top: 20px;
+        .footer-buttons .btn {
+            margin: 0 10px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>Добро пожаловать!</h1>
-    <div class="user-details">
+    <div class="user-info">
         <p>Имя: <span th:text="${name}"></span></p>
         <p>Отчество: <span th:text="${otchestvo}"></span></p>
         <p>Фамилия: <span th:text="${surname}"></span></p>
-        <p>Цех: <span th:text="${department}"></span></p>
-        <p>Участок: <span th:text="${sector}"></span></p>
+        <p>Отдел: <span th:text="${department}"></span></p>
+        <p>Сектор: <span th:text="${sector}"></span></p>
         <p>Рабочий центр: <span th:text="${work_center}"></span></p>
         <p>Должность: <span th:text="${job_title}"></span></p>
     </div>
-    <form th:action="@{/logout}" method="post" class="logout-button">
-        <button type="submit" class="btn waves-effect waves-light">Выйти</button>
-    </form>
-    <div class="action-buttons">
-        <a href="#" class="btn waves-effect waves-light">Найти наряд</a>
-        <a href="#" class="btn waves-effect waves-light">Создать наряд</a>
+    <div class="orders-list">
+        <h5>Список последних заказов</h5>
+        <ul>
+            <li th:each="order : ${orders}">
+                <a th:href="@{'/order/' + ${order.id}}" th:text="${order.name}"></a>
+            </li>
+        </ul>
     </div>
 </div>
-
+<div class="footer-buttons">
+    <div>
+        <a href="#" class="btn" th:href="@{/find-order}">найти наряд</a>
+        <a href="#" class="btn" th:href="@{/create-order}">создать наряд</a>
+    </div>
+    <a href="#" class="btn red" th:href="@{/logout}">Выход из сессии</a>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
