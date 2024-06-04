@@ -1,5 +1,6 @@
 package com.efreh.order_manager.entity;
 
+import com.efreh.order_manager.entity.authN.User;
 import jakarta.persistence.*;
 
 @Entity
@@ -34,6 +35,9 @@ public class Employee {
     @Column(name = "job_title", length = 20)
     private String job_title;
 
+    @OneToOne
+    private User user;
+
     public Employee() {
     }
 
@@ -46,6 +50,14 @@ public class Employee {
         this.sector = sector;
         this.work_center = work_center;
         this.job_title = job_title;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {

@@ -1,10 +1,12 @@
 package com.efreh.order_manager.controllers;
 
 import com.efreh.order_manager.dao.EmployeeRepository;
+import com.efreh.order_manager.dao.UserRepository;
 import com.efreh.order_manager.entity.Employee;
+import com.efreh.order_manager.entity.authN.User;
+import com.efreh.order_manager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +17,8 @@ public class WelcomeController {
     EmployeeRepository employeeRepository;
 
     @GetMapping("/")
-    public String index(@AuthenticationPrincipal UserDetails userDetails, Model model){
-        Employee employee = employeeRepository.findById(1).orElse(null);
+    public String index(@AuthenticationPrincipal User user, Model model){
+        Employee employee = employeeRepository.findById(user.getEmployee().getId()).orElse(null);
         model.addAttribute("name",employee.getName());
         model.addAttribute("otchestvo",employee.getOtchestvo());
         model.addAttribute("surname",employee.getSurname());

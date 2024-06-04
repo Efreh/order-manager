@@ -3,10 +3,12 @@ package com.efreh.order_manager.entity.authN;
 import com.efreh.order_manager.entity.Employee;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -20,11 +22,10 @@ public class User implements UserDetails {
     @Transient
     private String passwordConfirm;
 
-    @OneToOne(targetEntity = Employee.class)
-    private Long employee;
+    @OneToOne
+    private Employee employee;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Role> roles;
+    private String role;
 
     public User() {
     }
@@ -45,25 +46,27 @@ public class User implements UserDetails {
         this.passwordConfirm = passwordConfirm;
     }
 
-    public Long getEmployee() {
+    public Employee getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Long employeeId) {
-        this.employee = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return Arrays.stream(getRole().split(", "))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
