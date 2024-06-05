@@ -21,28 +21,23 @@ public class OrderManagerApplication {
         ApplicationContext context = SpringApplication.run(OrderManagerApplication.class, args);
 
         UserService userService = context.getBean("userService", UserService.class);
-        EmployeeRepository employeeRepository = context.getBean(EmployeeRepository.class);
 
         User user = new User();
         user.setUsername("test");
         user.setPassword("test");
         user.setPasswordConfirm("test");
-
-        Employee employee = new Employee("8651259648"
+        user.setEmployee(new Employee("8651259648"
                 , "Alex"
                 , "Mihaylivich"
                 , "Ludov"
                 , "110"
                 , "112"
                 , "KDX"
-                , "Operator");
-        employeeRepository.save(employee);
-
-        user.setEmployee(employee);
+                , "Operator"));
         userService.saveUser(user);
 
-        employee.setUser(user);
-        employeeRepository.save(employee);
+//        employee.setUser(user);
+//        employeeRepository.save(employee);
 
     }
 

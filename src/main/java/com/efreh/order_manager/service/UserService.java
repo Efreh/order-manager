@@ -1,10 +1,9 @@
 package com.efreh.order_manager.service;
 
+import com.efreh.order_manager.dao.EmployeeRepository;
 import com.efreh.order_manager.dao.UserRepository;
-import com.efreh.order_manager.entity.Employee;
 import com.efreh.order_manager.entity.authN.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +17,9 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    EmployeeRepository employeeRepository;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -46,6 +48,7 @@ public class UserService implements UserDetailsService {
         if (userFromDb != null) {
             return false;
         }
+        employeeRepository.save(user.getEmployee());
         user.setRole("EMPLOYEE_USER");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
