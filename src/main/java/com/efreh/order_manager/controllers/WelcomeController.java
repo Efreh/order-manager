@@ -1,10 +1,8 @@
 package com.efreh.order_manager.controllers;
 
 import com.efreh.order_manager.dao.EmployeeRepository;
-import com.efreh.order_manager.dao.UserRepository;
 import com.efreh.order_manager.entity.Employee;
 import com.efreh.order_manager.entity.authN.User;
-import com.efreh.order_manager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
