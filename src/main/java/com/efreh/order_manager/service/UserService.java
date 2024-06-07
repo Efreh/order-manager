@@ -48,6 +48,9 @@ public class UserService implements UserDetailsService {
         if (userFromDb != null) {
             return false;
         }
+
+        user.getEmployee().setLogin_phone(user.getUsername());
+
         employeeRepository.save(user.getEmployee());
         user.setRole("EMPLOYEE_USER");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

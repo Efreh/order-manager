@@ -17,50 +17,46 @@
 <body>
 <div class="container">
     <form class="form-signin" method="post" th:action="@{/registration}" th:object="${user}">
-        <h2 class="form-signin-heading">Please register</h2>
+        <h2 class="form-signin-heading">Регистрация пользователя</h2>
         <div class="form-group">
             <label for="username" class="sr-only">Username</label>
-            <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Username (+7...)" required autofocus>
+            <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Номер телефона (+7...)" required autofocus>
         </div>
         <div class="form-group">
             <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Password" required>
+            <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Пароль" required>
         </div>
         <div class="form-group">
             <label for="passwordConfirm" class="sr-only">Confirm Password</label>
-            <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" class="form-control" placeholder="Confirm Password" required>
+            <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" class="form-control" placeholder="Подтвердите пароль" required>
         </div>
         <div class="form-group">
             <label for="name" class="sr-only">Name</label>
-            <input type="text" id="login_phone" th:field="*{employee.login_phone}" class="form-control" placeholder="login_phone" required>
-        </div>
-        <div class="form-group">
-            <label for="name" class="sr-only">Name</label>
-            <input type="text" id="name" th:field="*{employee.name}" class="form-control" placeholder="Name" required>
+            <input type="text" id="name" th:field="*{employee.name}" class="form-control" placeholder="Имя" required>
         </div>
         <div class="form-group">
             <label for="otchestvo" class="sr-only">Otchestvo</label>
-            <input type="text" id="otchestvo" th:field="*{employee.otchestvo}" class="form-control" placeholder="Otchestvo">
+            <input type="text" id="otchestvo" th:field="*{employee.otchestvo}" class="form-control" placeholder="Отчество">
         </div>
         <div class="form-group">
             <label for="surname" class="sr-only">Surname</label>
-            <input type="text" id="surname" th:field="*{employee.surname}" class="form-control" placeholder="Surname" required>
+            <input type="text" id="surname" th:field="*{employee.surname}" class="form-control" placeholder="Фамилия" required>
         </div>
         <div class="form-group">
             <label for="department" class="sr-only">Department</label>
-            <input type="text" id="department" th:field="*{employee.department}" class="form-control" placeholder="Department" required>
+            <input type="text" id="department" th:field="*{employee.department}" class="form-control" placeholder="Цех" required>
         </div>
         <div class="form-group">
             <label for="sector" class="sr-only">Sector</label>
-            <input type="text" id="sector" th:field="*{employee.sector}" class="form-control" placeholder="Sector" required>
+            <input type="text" id="sector" th:field="*{employee.sector}" class="form-control" placeholder="Участок" required>
         </div>
         <div class="form-group">
             <label for="work_center" class="sr-only">Work Center</label>
-            <input type="text" id="work_center" th:field="*{employee.work_center}" class="form-control" placeholder="Work Center">
+            <input type="text" id="work_center" th:field="*{employee.work_center}" class="form-control" placeholder="Рабочий центр">
         </div>
         <div class="form-group">
             <label for="job_title" class="sr-only">Job Title</label>
-            <input type="text" id="job_title" th:field="*{employee.job_title}" class="form-control" placeholder="Job Title">
+            <input type="text" id="job_title" th:field="*{employee.job_title}" class="form-control" placeholder="Профессия">
         </div>
         <input name="_csrf" type="hidden" th:value="${_csrf.token}" />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
