@@ -10,7 +10,7 @@
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" integrity="sha384-oOE/3m0LUMPub4kaC09mrdEhIc+e3exm4xOGxAmuFXhBNF4hcg/6MiAXAf5p0P56" crossorigin="anonymous"/>
     <style>
         body {
-            background-color: peachpuff;
+            background-color: #ffbe98;
         }
     </style>
 </head>
@@ -59,7 +59,7 @@
             <input type="text" id="job_title" th:field="*{employee.job_title}" class="form-control" placeholder="Профессия">
         </div>
         <input name="_csrf" type="hidden" th:value="${_csrf.token}" />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрировать</button>
     </form>
 </div>
 </body>
