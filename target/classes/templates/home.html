@@ -19,7 +19,7 @@
             justify-content: space-between;
             padding: 20px;
         }
-        .user-info, .orders-list {
+        .user-info, .orders-list, .workers-list {
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -29,8 +29,9 @@
         .user-info {
             width: 20%;
         }
-        .orders-list {
+        .orders-list, .workers-list {
             width: 75%;
+            margin-top: 20px;
         }
         .footer-buttons {
             display: flex;
@@ -56,11 +57,21 @@
         <p>Рабочий центр: <span th:text="${work_center}"></span></p>
         <p>Должность: <span th:text="${job_title}"></span></p>
     </div>
-    <div class="orders-list">
+    <!-- Таблица "Список последних заказов" для EMPLOYEE -->
+    <div class="orders-list" th:if="${#authorization.expression('hasRole(''EMPLOYEE'')')}">
         <h5>Список последних заказов</h5>
         <ul>
             <li th:each="order : ${orders}">
                 <a th:href="@{'/order/' + ${order.id}}" th:text="${order.name}"></a>
+            </li>
+        </ul>
+    </div>
+    <!-- Таблица "Список рабочих" для MASTER -->
+    <div class="workers-list" th:if="${#authorization.expression('hasRole(''MASTER'')')}">
+        <h5>Список рабочих</h5>
+        <ul>
+            <li th:each="worker : ${workers}">
+                <span th:text="${worker.name}"></span>
             </li>
         </ul>
     </div>
