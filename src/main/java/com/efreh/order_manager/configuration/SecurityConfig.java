@@ -1,6 +1,7 @@
 package com.efreh.order_manager.configuration;
 
 import com.efreh.order_manager.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -15,6 +16,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -35,7 +39,7 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/")
                         .permitAll()
                 )
-                .formLogin(Customizer.withDefaults())
+                .formLogin(form -> form.successHandler(customAuthenticationSuccessHandler))
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }

@@ -10,12 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
+public class EmployeeController {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    @GetMapping("/home")
-    public String home(@AuthenticationPrincipal User user, Model model){
+    @GetMapping("/employee")
+    public String employeePage(@AuthenticationPrincipal User user, Model model){
         Employee employee = employeeRepository.findById(user.getEmployee().getId()).orElse(null);
         model.addAttribute("name",employee.getName());
         model.addAttribute("otchestvo",employee.getOtchestvo());
@@ -24,6 +24,6 @@ public class HomeController {
         model.addAttribute("sector",employee.getSector());
         model.addAttribute("work_center",employee.getWork_center());
         model.addAttribute("job_title",employee.getJob_title());
-        return "home";
+        return "/employee";
     }
 }

@@ -52,7 +52,7 @@ public class UserService implements UserDetailsService {
         user.getEmployee().setLogin_phone(user.getUsername());
 
         employeeRepository.save(user.getEmployee());
-        user.setRole("EMPLOYEE_USER");
+        user.setRole("ROLE_EMPLOYEE");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
