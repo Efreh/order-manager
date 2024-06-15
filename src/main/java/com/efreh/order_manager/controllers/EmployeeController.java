@@ -26,4 +26,17 @@ public class EmployeeController {
         model.addAttribute("job_title",employee.getJob_title());
         return "/employee";
     }
+
+    @GetMapping("/master")
+    public String masterPage(@AuthenticationPrincipal User user, Model model){
+        Employee employee = employeeRepository.findById(user.getEmployee().getId()).orElse(null);
+        model.addAttribute("name",employee.getName());
+        model.addAttribute("otchestvo",employee.getOtchestvo());
+        model.addAttribute("surname",employee.getSurname());
+        model.addAttribute("department",employee.getDepartment());
+        model.addAttribute("sector",employee.getSector());
+        model.addAttribute("work_center",employee.getWork_center());
+        model.addAttribute("job_title",employee.getJob_title());
+        return "/master";
+    }
 }
