@@ -20,10 +20,10 @@ public class Order {
     @Column(name = "workShift", nullable = false, length = 1)
     private int workShift;
 
-    @Column(name = "employeeId")
-    private int employeeId;
+    @ManyToOne
+    private Employee employee;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "orderIdInPos")
     private List<Position> positionList;
 
@@ -60,12 +60,12 @@ public class Order {
         this.workShift = workShift;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public List<Position> getPositionList() {

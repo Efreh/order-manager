@@ -34,14 +34,14 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User findUserById(Long userId) {
-        Optional<User> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElse(new User());
-    }
-
-    public List<User> allUser() {
-        return userRepository.findAll();
-    }
+//    public User findUserById(Long userId) {
+//        Optional<User> userFromDb = userRepository.findById(userId);
+//        return userFromDb.orElse(new User());
+//    }
+//
+//    public List<User> allUser() {
+//        return userRepository.findAll();
+//    }
 
     public boolean saveUser(User user) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
@@ -67,8 +67,8 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
-    public List<User> usergtList(Long idMin) {
-        return userRepository.findByIdGreaterThan(idMin);
-    }
+//    public List<User> usergtList(Long idMin) {
+//        return userRepository.findByIdGreaterThan(idMin);
+//    }
 
 }

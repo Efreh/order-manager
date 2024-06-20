@@ -9,15 +9,20 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "positionId")
     private int positionId;
+
     @ManyToOne
     @JoinColumn(name = "orderIdInPos")
     private Order order;
+
     @Column(name = "orderNumber",length = 50)
     private String orderNumber;
+
     @Column(name = "orderPosition",length = 50,nullable = false)
     private String orderPosition;
+
     @Column(name = "amount")
     private int amount;
+
     @Column(name = "workOperation1",length = 50)
     private String workOperation1;
     @Column(name = "workOperation2",length = 50)
