@@ -80,15 +80,15 @@
     <a href="#" class="btn" th:href="@{/newOrder}">создать наряд</a>
     <a href="#" class="btn red" th:href="@{/logout}">Выход из сессии</a>
 </div>
-<div class="container">
+<div class="container" th:object="${employee}">
     <div class="user-info">
-        <p>Имя: <span th:text="${name}"></span></p>
-        <p>Отчество: <span th:text="${otchestvo}"></span></p>
-        <p>Фамилия: <span th:text="${surname}"></span></p>
-        <p>Цех: <span th:text="${department}"></span></p>
-        <p>Участок: <span th:text="${sector}"></span></p>
-        <p>Рабочий центр: <span th:text="${work_center}"></span></p>
-        <p>Должность: <span th:text="${job_title}"></span></p>
+        <p>Имя: <span th:text="*{name}"></span></p>
+        <p>Отчество: <span th:text="*{otchestvo}"></span></p>
+        <p>Фамилия: <span th:text="*{surname}"></span></p>
+        <p>Цех: <span th:text="*{department}"></span></p>
+        <p>Участок: <span th:text="*{sector}"></span></p>
+        <p>Рабочий центр: <span th:text="*{work_center}"></span></p>
+        <p>Должность: <span th:text="*{job_title}"></span></p>
     </div>
     <div class="orders-list">
         <h5>Список последних нарядов</h5>

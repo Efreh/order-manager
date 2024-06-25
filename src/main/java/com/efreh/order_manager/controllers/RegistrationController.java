@@ -16,21 +16,20 @@ public class RegistrationController {
     private UserService userService;
 
     @GetMapping("/registration")
-    public String showRegistrationPage(Model model){
+    public String showRegistrationPage(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("employee", new Employee());
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registerUser(@ModelAttribute User user, Model model){
-        if(!user.getPassword().equals(user.getPasswordConfirm())){
-            model.addAttribute("passwordError","Passwords ");
-            return "/registration";
+    public String registerUser(@ModelAttribute User user, Model model) {
+        if (!user.getPassword().equals(user.getPasswordConfirm())) {
+            model.addAttribute("passwordError", "Passwords ");
+            return "registration";
         }
 
         userService.saveUser(user);
 
-        return "redirect:/login";
+        return "redirect:/index";
     }
 }

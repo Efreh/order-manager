@@ -13,22 +13,22 @@ public class Position {
     @ManyToOne
     private Order order;
 
-    @Column(name = "orderNumber",length = 50)
+    @Column(name = "orderNumber", length = 50)
     private String orderNumber;
 
-    @Column(name = "orderPosition",length = 50,nullable = false)
+    @Column(name = "orderPosition", length = 50, nullable = false)
     private String orderPosition;
 
     @Column(name = "amount")
     private int amount;
 
-    @Column(name = "workOperation1",length = 50)
+    @Column(name = "workOperation1", length = 50)
     private String workOperation1;
-    @Column(name = "workOperation2",length = 50)
+    @Column(name = "workOperation2", length = 50)
     private String workOperation2;
-    @Column(name = "workOperation3",length = 50)
+    @Column(name = "workOperation3", length = 50)
     private String workOperation3;
-    @Column(name = "workOperation4",length = 50)
+    @Column(name = "workOperation4", length = 50)
     private String workOperation4;
 
     public Position() {

@@ -18,11 +18,14 @@ public class User implements UserDetails {
     private Long id;
 
     private String username;
+
     private String password;
+
     @Transient
     private String passwordConfirm;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
     private Employee employee;
 
     private String role;

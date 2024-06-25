@@ -16,9 +16,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-        if(roles.contains("ROLE_MASTER")){
+        if (roles.contains("ROLE_MASTER")) {
             response.sendRedirect("/master");
-        } else if (roles.contains("ROLE_EMPLOYEE")){
+        } else if (roles.contains("ROLE_EMPLOYEE")) {
             response.sendRedirect("/employee");
         } else response.sendRedirect("/");
     }

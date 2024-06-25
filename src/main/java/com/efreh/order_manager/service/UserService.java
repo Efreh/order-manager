@@ -10,9 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
@@ -51,7 +48,6 @@ public class UserService implements UserDetailsService {
 
         user.getEmployee().setLogin_phone(user.getUsername());
 
-        employeeRepository.save(user.getEmployee());
         user.setRole("ROLE_EMPLOYEE");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
@@ -66,9 +62,4 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
-
-//    public List<User> usergtList(Long idMin) {
-//        return userRepository.findByIdGreaterThan(idMin);
-//    }
-
 }

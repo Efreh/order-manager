@@ -37,17 +37,6 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String login_phone, String name, String otchestvo, String surname, String department, String sector, String work_center, String job_title) {
-        this.login_phone = login_phone;
-        this.name = name;
-        this.otchestvo = otchestvo;
-        this.surname = surname;
-        this.department = department;
-        this.sector = sector;
-        this.work_center = work_center;
-        this.job_title = job_title;
-    }
-
     public Long getId() {
         return employeeId;
     }

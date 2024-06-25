@@ -11,9 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 @Controller
 @SessionAttributes("order")
 public class NewOrderController {
@@ -31,8 +28,9 @@ public class NewOrderController {
         model.addAttribute("position", new Position());
         return "/newOrder";
     }
+
     @PostMapping("/newOrder")
-    public String createOrder(@ModelAttribute("order") Order order, @AuthenticationPrincipal User user, SessionStatus sessionStatus){
+    public String createOrder(@ModelAttribute("order") Order order, @AuthenticationPrincipal User user, SessionStatus sessionStatus) {
         order.setEmployee(user.getEmployee());
         orderService.saveOrder(order);
         sessionStatus.setComplete();
@@ -40,12 +38,11 @@ public class NewOrderController {
     }
 
     @PostMapping("/newOrder/addPosition")
-    public String addPosition(@ModelAttribute("order") Order order,@ModelAttribute Position position, Model model){
+    public String addPosition(@ModelAttribute("order") Order order, @ModelAttribute Position position, Model model) {
         position.setOrder(order);
         order.getPositionList().add(position);
-        model.addAttribute("order",order);
+        model.addAttribute("order", order);
         model.addAttribute("position", new Position());
-
         return "newOrder";
     }
 }
