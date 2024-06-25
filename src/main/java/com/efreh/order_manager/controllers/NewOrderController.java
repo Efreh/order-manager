@@ -45,4 +45,9 @@ public class NewOrderController {
         model.addAttribute("position", new Position());
         return "newOrder";
     }
+    @GetMapping("/newOrder/cancel")
+    public String canselOrder(SessionStatus sessionStatus){
+        sessionStatus.setComplete();
+        return "redirect:/employee";
+    }
 }

@@ -1,61 +1,90 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
     <title>New Order</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" integrity="sha384-oOE/3m0LUMPub4kaC09mrdEhIc+e3exm4xOGxAmuFXhBNF4hcg/6MiAXAf5p0P56" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #ffbe98;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            background-color: #ffbe98; /* Персиковый цвет */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .form-container, .table-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+        }
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .form-container, .table-container {
+                width: 48%;
+                margin-bottom: 0;
+            }
+            .container {
+                padding-top: 70px;
+            }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2>Новый заказ</h2>
-    <div>
-        <h3>Добавить позицию</h3>
+    <div class="form-container">
+        <h5>Добавить позицию</h5>
         <form th:action="@{/newOrder/addPosition}" th:object="${position}" method="post">
-            <div class="form-group">
+            <div class="input-field">
                 <label for="orderNumber">Номер заказа:</label>
-                <input type="text" id="orderNumber" class="form-control" th:field="*{orderNumber}" required>
+                <input type="text" id="orderNumber" class="validate" th:field="*{orderNumber}" required>
             </div>
-            <div class="form-group">
+            <div class="input-field">
                 <label for="orderPosition">Позиция заказа:</label>
-                <input type="text" id="orderPosition" class="form-control" th:field="*{orderPosition}" required>
+                <input type="text" id="orderPosition" class="validate" th:field="*{orderPosition}" required>
             </div>
-            <div class="form-group">
-                <label for="amount">Колличество:</label>
-                <input type="number" id="amount" class="form-control" th:field="*{amount}" required>
+            <div class="input-field">
+                <label for="amount">Количество:</label>
+                <input type="number" id="amount" class="validate" th:field="*{amount}" required>
             </div>
-            <div class="form-group">
+            <div class="input-field">
                 <label for="workOperation1">Рабочая операция 1:</label>
-                <input type="text" id="workOperation1" class="form-control" th:field="*{workOperation1}">
+                <input type="text" id="workOperation1" class="validate" th:field="*{workOperation1}">
             </div>
-            <div class="form-group">
+            <div class="input-field">
                 <label for="workOperation2">Рабочая операция 2:</label>
-                <input type="text" id="workOperation2" class="form-control" th:field="*{workOperation2}">
+                <input type="text" id="workOperation2" class="validate" th:field="*{workOperation2}">
             </div>
-            <div class="form-group">
+            <div class="input-field">
                 <label for="workOperation3">Рабочая операция 3:</label>
-                <input type="text" id="workOperation3" class="form-control" th:field="*{workOperation3}">
+                <input type="text" id="workOperation3" class="validate" th:field="*{workOperation3}">
             </div>
-            <div class="form-group">
+            <div class="input-field">
                 <label for="workOperation4">Рабочая операция 4:</label>
-                <input type="text" id="workOperation4" class="form-control" th:field="*{workOperation4}">
+                <input type="text" id="workOperation4" class="validate" th:field="*{workOperation4}">
             </div>
-            <button type="submit" class="btn btn-primary">Добавить позицию</button>
+            <button type="submit" class="btn">Добавить позицию</button>
         </form>
-
-        <h3>Позиции заказа</h3>
-        <table class="table table-bordered">
+    </div>
+    <div class="table-container">
+        <h5>Позиции заказа</h5>
+        <table class="highlight">
             <thead>
             <tr>
                 <th>Номер заказа</th>
                 <th>Позиция заказа</th>
-                <th>Колличесто</th>
+                <th>Количество</th>
                 <th>Рабочая операция 1</th>
                 <th>Рабочая операция 2</th>
                 <th>Рабочая операция 3</th>
@@ -75,20 +104,26 @@
             </tbody>
         </table>
     </div>
-    <form th:action="@{/newOrder}" th:object="${order}" method="post">
-        <div class="form-group" >
+</div>
+<form th:action="@{/newOrder}" th:object="${order}" method="post" class="container">
+    <div class="form-container">
+        <div class="input-field">
             <label for="date">Дата:</label>
-            <input type="date" id="date" class="form-control" th:field="*{date}" required>
+            <input type="date" id="date" class="validate" th:field="*{date}" required>
         </div>
-        <div class="form-group">
+        <div class="input-field">
             <label for="workShift">Номер смены:</label>
-            <select id="workShift" class="form-control" th:field="*{workShift}" required>
+            <select id="workShift" class="browser-default" th:field="*{workShift}" required>
                 <option value="1">I</option>
                 <option value="2">II</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Сохранить наряд</button>
-    </form>
-</div>
+        <div>
+            <button type="submit" class="btn">Сохранить наряд</button>
+            <a th:href="@{/newOrder/cancel}" class="btn red right">Отменить наряд</a>
+        </div>
+    </div>
+</form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
