@@ -4,6 +4,7 @@ import com.efreh.order_manager.entity.Employee;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,9 +24,8 @@ public class Order {
     @ManyToOne
     private Employee employee;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "orderIdInPos")
-    private List<Position> positionList;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Position> positionList = new ArrayList<>();
 
     @Column(name = "masterCheck", columnDefinition = "boolean default false")
     private boolean masterCheck;

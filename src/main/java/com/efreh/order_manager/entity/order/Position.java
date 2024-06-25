@@ -11,7 +11,6 @@ public class Position {
     private int positionId;
 
     @ManyToOne
-    @JoinColumn(name = "orderIdInPos")
     private Order order;
 
     @Column(name = "orderNumber",length = 50)

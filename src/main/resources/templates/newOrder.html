@@ -1,73 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Order Form</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>New Order</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" integrity="sha384-oOE/3m0LUMPub4kaC09mrdEhIc+e3exm4xOGxAmuFXhBNF4hcg/6MiAXAf5p0P56" crossorigin="anonymous"/>
+    <style>
+        body {
+            background-color: #ffbe98;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <h2>Create Order</h2>
-    <form th:action="@{/newOrder}" th:object="${order}" method="post">
-        <div class="form-group">
-            <label for="date">Date:</label>
-            <input type="date" id="date" class="form-control" th:field="*{date}" required>
-        </div>
-        <div class="form-group">
-            <label for="workShift">Work Shift:</label>
-            <select id="workShift" class="form-control" th:field="*{workShift}" required>
-                <option value="1">I</option>
-                <option value="2">II</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Save Order</button>
-    </form>
-
-    <div th:if="${order != null}">
-        <h3>Add Position to Order</h3>
+    <h2>Новый заказ</h2>
+    <div>
+        <h3>Добавить позицию</h3>
         <form th:action="@{/newOrder/addPosition}" th:object="${position}" method="post">
-            <input type="hidden" th:field="*{order.orderId}" th:value="${order.orderId}" />
             <div class="form-group">
-                <label for="orderNumber">Order Number:</label>
+                <label for="orderNumber">Номер заказа:</label>
                 <input type="text" id="orderNumber" class="form-control" th:field="*{orderNumber}" required>
             </div>
             <div class="form-group">
-                <label for="orderPosition">Order Position:</label>
+                <label for="orderPosition">Позиция заказа:</label>
                 <input type="text" id="orderPosition" class="form-control" th:field="*{orderPosition}" required>
             </div>
             <div class="form-group">
-                <label for="amount">Amount:</label>
+                <label for="amount">Колличество:</label>
                 <input type="number" id="amount" class="form-control" th:field="*{amount}" required>
             </div>
             <div class="form-group">
-                <label for="workOperation1">Work Operation 1:</label>
+                <label for="workOperation1">Рабочая операция 1:</label>
                 <input type="text" id="workOperation1" class="form-control" th:field="*{workOperation1}">
             </div>
             <div class="form-group">
-                <label for="workOperation2">Work Operation 2:</label>
+                <label for="workOperation2">Рабочая операция 2:</label>
                 <input type="text" id="workOperation2" class="form-control" th:field="*{workOperation2}">
             </div>
             <div class="form-group">
-                <label for="workOperation3">Work Operation 3:</label>
+                <label for="workOperation3">Рабочая операция 3:</label>
                 <input type="text" id="workOperation3" class="form-control" th:field="*{workOperation3}">
             </div>
             <div class="form-group">
-                <label for="workOperation4">Work Operation 4:</label>
+                <label for="workOperation4">Рабочая операция 4:</label>
                 <input type="text" id="workOperation4" class="form-control" th:field="*{workOperation4}">
             </div>
-            <button type="submit" class="btn btn-primary">Add Position</button>
+            <button type="submit" class="btn btn-primary">Добавить позицию</button>
         </form>
 
-        <h3>Order Positions</h3>
+        <h3>Позиции заказа</h3>
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Order Number</th>
-                <th>Order Position</th>
-                <th>Amount</th>
-                <th>Work Operation 1</th>
-                <th>Work Operation 2</th>
-                <th>Work Operation 3</th>
-                <th>Work Operation 4</th>
+                <th>Номер заказа</th>
+                <th>Позиция заказа</th>
+                <th>Колличесто</th>
+                <th>Рабочая операция 1</th>
+                <th>Рабочая операция 2</th>
+                <th>Рабочая операция 3</th>
+                <th>Рабочая операция 4</th>
             </tr>
             </thead>
             <tbody>
@@ -83,6 +75,20 @@
             </tbody>
         </table>
     </div>
+    <form th:action="@{/newOrder}" th:object="${order}" method="post">
+        <div class="form-group" >
+            <label for="date">Дата:</label>
+            <input type="date" id="date" class="form-control" th:field="*{date}" required>
+        </div>
+        <div class="form-group">
+            <label for="workShift">Номер смены:</label>
+            <select id="workShift" class="form-control" th:field="*{workShift}" required>
+                <option value="1">I</option>
+                <option value="2">II</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить наряд</button>
+    </form>
 </div>
 </body>
 </html>
