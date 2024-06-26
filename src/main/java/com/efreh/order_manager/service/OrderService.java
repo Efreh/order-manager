@@ -5,6 +5,8 @@ import com.efreh.order_manager.entity.order.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderService {
     @Autowired
@@ -21,6 +23,14 @@ public class OrderService {
             return true;
         }
         return false;
+    }
+
+    public List<Order> lastFiveOrder(Long empId){
+        return orderRepository.findTop5ByEmployeeIdOrderByDateDesc(empId);
+    }
+
+    public Order findOrderById(Long id){
+        return orderRepository.findById(id).orElse(null);
     }
 
 }

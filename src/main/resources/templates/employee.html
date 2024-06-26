@@ -7,71 +7,89 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-<!--            min-height: 100vh;-->
-            margin: 0;
-            background-color: #ffbe98; /* Персиковый цвет */
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            padding: 20px;
-        }
-        .user-info, .orders-list {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            background-color: #f9f9f9;
-            margin-bottom: 20px;
-        }
-        .user-info {
-            order: 2;
-        }
-        .orders-list {
-            order: 3;
-        }
-        .header-buttons {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            background-color: #f9f9f9;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 10px 20px;
-        }
-        .header-buttons .btn {
-            margin: 0 10px;
-        }
-        @media (min-width: 768px) {
-            .container {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-            .user-info, .orders-list {
-                width: 48%;
-                margin-bottom: 0;
-            }
-            .user-info {
-                order: 1;
-            }
-            .orders-list {
-                order: 2;
-            }
-            .header-buttons {
-                flex-direction: column;
-                align-items: flex-start;
-                position: fixed;
-                top: 0;
-                width: 100%;
-                z-index: 1000;
-            }
-            .container {
-                padding-top: 70px;
-            }
-        }
+             display: flex;
+             flex-direction: column;
+             margin: 0;
+             background-color: #ffbe98; /* Персиковый цвет */
+         }
+         .container {
+             display: flex;
+             flex-direction: column;
+             flex-grow: 1;
+             padding: 20px;
+         }
+         .user-info, .orders-list {
+             border: 1px solid #ddd;
+             border-radius: 8px;
+             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+             padding: 20px;
+             background-color: #f9f9f9;
+             margin-bottom: 20px;
+         }
+         .user-info {
+             order: 2;
+         }
+         .orders-list {
+             order: 3;
+         }
+         .header-buttons {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             margin-bottom: 20px;
+             background-color: #f9f9f9;
+             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+             padding: 10px 20px;
+         }
+         .header-buttons .btn {
+             margin: 0 10px;
+         }
+         @media (min-width: 768px) {
+             .container {
+                 flex-direction: row;
+                 justify-content: space-between;
+             }
+             .user-info, .orders-list {
+                 width: 48%;
+                 margin-bottom: 0;
+             }
+             .user-info {
+                 order: 1;
+             }
+             .orders-list {
+                 order: 2;
+             }
+             .header-buttons {
+                 flex-direction: column;
+                 align-items: flex-start;
+                 position: fixed;
+                 top: 0;
+                 width: 100%;
+                 z-index: 1000;
+             }
+             .container {
+                 padding-top: 70px;
+             }
+         }
+         .orders-list ul {
+             list-style-type: none;
+             padding: 0;
+         }
+         .orders-list li {
+             margin-bottom: 10px;
+         }
+         .orders-list a {
+             display: block;
+             padding: 10px;
+             border-radius: 4px;
+             background-color: #26a69a; /* Цвет ссылок */
+             color: white;
+             text-align: center;
+             text-decoration: none;
+         }
+         .orders-list a:hover {
+             background-color: #00796b; /* Цвет ссылок при наведении */
+         }
     </style>
 </head>
 <body>
@@ -94,7 +112,7 @@
         <h5>Список последних нарядов</h5>
         <ul>
             <li th:each="order : ${orders}">
-                <a th:href="@{'/order/' + ${order.id}}" th:text="${order.name}"></a>
+                <a th:href="@{/order/{id}(id=${order.orderId})}" th:text="${order.date}"></a>
             </li>
         </ul>
     </div>

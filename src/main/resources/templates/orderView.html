@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background-color: #ffbe98; /* Персиковый цвет */
+        }
+        .container {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section .row {
+            display: flex;
+            justify-content: space-between;
+        }
+        .positions-list table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .positions-list table, .positions-list th, .positions-list td {
+            border: 1px solid #ddd;
+        }
+        .positions-list th, .positions-list td {
+            padding: 8px;
+            text-align: left;
+        }
+        .positions-list th {
+            background-color: #26a69a; /* Цвет заголовков таблицы */
+            color: white;
+        }
+        .status-checked {
+            color: green;
+        }
+        .status-unchecked {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="section">
+        <h5>Информация о сотруднике и наряде</h5>
+        <div class="row">
+            <div class="col s6">
+                <p>Фамилия: <span th:text="${order.employee.surname}"></span></p>
+                <p>Имя: <span th:text="${order.employee.name}"></span></p>
+                <p>Отчество: <span th:text="${order.employee.otchestvo}"></span></p>
+                <p>Цех: <span th:text="${order.employee.department}"></span></p>
+                <p>Участок: <span th:text="${order.employee.sector}"></span></p>
+                <p>Рабочий центр: <span th:text="${order.employee.work_center}"></span></p>
+            </div>
+            <div class="col s6">
+                <p>Профессия: <span th:text="${order.employee.job_title}"></span></p>
+                <p>Дата: <span th:text="${order.date}"></span></p>
+                <p>Рабочая смена: <span th:text="${order.workShift}"></span></p>
+                <p>Проверено мастером: <span th:text="${order.masterCheck ? 'Да' : 'Нет'}"
+                                             th:classappend="${order.masterCheck} ? 'status-checked' : 'status-unchecked'"></span>
+                </p>
+                <p>Проверено контролером ОТК: <span th:text="${order.otkControllerCheck ? 'Да' : 'Нет'}"
+                                                    th:classappend="${order.otkControllerCheck} ? 'status-checked' : 'status-unchecked'"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="positions-list">
+        <h5>Список позиций</h5>
+        <table>
+            <thead>
+            <tr>
+                <th>Номер заказа</th>
+                <th>Позиция заказа</th>
+                <th>Количество</th>
+                <th>Рабочая операция 1</th>
+                <th>Рабочая операция 2</th>
+                <th>Рабочая операция 3</th>
+                <th>Рабочая операция 4</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="position : ${order.positionList}">
+                <td th:text="${position.orderNumber}"></td>
+                <td th:text="${position.orderPosition}"></td>
+                <td th:text="${position.amount}"></td>
+                <td th:text="${position.workOperation1}"></td>
+                <td th:text="${position.workOperation2}"></td>
+                <td th:text="${position.workOperation3}"></td>
+                <td th:text="${position.workOperation4}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
