@@ -48,10 +48,19 @@
         .status-unchecked {
             color: red;
         }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
+    <div class="button-container">
+        <a th:href="@{/employee}" class="btn waves-effect waves-light"><i class="material-icons left">arrow_back</i>Назад</a>
+        <a th:href="@{/orderRedactor/{id}(id=${order.orderId})}" class="btn waves-effect waves-light"><i class="material-icons left">edit</i>Редактировать</a>
+    </div>
     <div class="section">
         <h5>Информация о сотруднике и наряде</h5>
         <div class="row">

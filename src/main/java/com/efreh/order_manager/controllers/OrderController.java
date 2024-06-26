@@ -13,7 +13,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 @SessionAttributes("order")
-public class NewOrderController {
+public class OrderController {
     @ModelAttribute("order")
     public Order createOrder() {
         return new Order();
@@ -22,14 +22,21 @@ public class NewOrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/newOrder")
+    @GetMapping("/orderRedactor")
     public String newOrder(@ModelAttribute("order") Order order, Model model) {
         model.addAttribute("order", order);
         model.addAttribute("position", new Position());
-        return "/newOrder";
+        return "orderRedactor";
+    }
+    @GetMapping("/orderRedactor/{id}")
+    public String editOrder(@PathVariable("id") Long orderId, Model model){
+        Order order = orderService.findOrderById(orderId);
+        model.addAttribute("order",order);
+        model.addAttribute("position", new Position());
+        return "orderRedactor";
     }
 
-    @PostMapping("/newOrder")
+    @PostMapping("/orderRedactor")
     public String createOrder(@ModelAttribute("order") Order order, @AuthenticationPrincipal User user, SessionStatus sessionStatus) {
         order.setEmployee(user.getEmployee());
         orderService.saveOrder(order);
@@ -37,15 +44,25 @@ public class NewOrderController {
         return "redirect:/employee";
     }
 
-    @PostMapping("/newOrder/addPosition")
+    @PostMapping("/orderRedactor/addPosition")
     public String addPosition(@ModelAttribute("order") Order order, @ModelAttribute Position position, Model model) {
         position.setOrder(order);
         order.getPositionList().add(position);
         model.addAttribute("order", order);
         model.addAttribute("position", new Position());
-        return "newOrder";
+        return "orderRedactor";
     }
-    @GetMapping("/newOrder/cancel")
+    @PostMapping("/orderRedactor/deletePosition")
+    public String deletePosition(@ModelAttribute("order") Order order,
+                                 @RequestParam("id") Long positionId,
+                                 Model model){
+        order.getPositionList().removeIf(position -> positionId == position.getPositionId());
+        model.addAttribute("order",order);
+        model.addAttribute("position", new Position());
+        return "orderRedactor";
+    }
+
+    @GetMapping("/orderRedactor/cancel")
     public String canselOrder(SessionStatus sessionStatus){
         sessionStatus.setComplete();
         return "redirect:/employee";

@@ -48,10 +48,19 @@
         .status-unchecked {
             color: red;
         }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
+    <div class="button-container">
+        <a th:href="@{/employee}" class="btn waves-effect waves-light"><i class="material-icons left">arrow_back</i>Назад</a>
+        <a th:href="@{/orderRedactor/{id}(id=${order.orderId})}" class="btn waves-effect waves-light"><i class="material-icons left">edit</i>Редактировать</a>
+    </div>
     <div class="section">
         <h5>Информация о сотруднике и наряде</h5>
         <div class="row">
@@ -61,9 +70,9 @@
                 <p>Отчество: <span th:text="${order.employee.otchestvo}"></span></p>
                 <p>Цех: <span th:text="${order.employee.department}"></span></p>
                 <p>Участок: <span th:text="${order.employee.sector}"></span></p>
+                <p>Рабочий центр: <span th:text="${order.employee.work_center}"></span></p>
             </div>
             <div class="col s6">
-                <p>Рабочий центр: <span th:text="${order.employee.work_center}"></span></p>
                 <p>Профессия: <span th:text="${order.employee.job_title}"></span></p>
                 <p>Дата: <span th:text="${order.date}"></span></p>
                 <p>Рабочая смена: <span th:text="${order.workShift}"></span></p>
