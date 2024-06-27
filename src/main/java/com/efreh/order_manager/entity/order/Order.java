@@ -2,6 +2,7 @@ package com.efreh.order_manager.entity.order;
 
 import com.efreh.order_manager.entity.Employee;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Order {
     private int orderId;
 
     @Column(name = "date", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
     @Column(name = "workShift", nullable = false, length = 1)

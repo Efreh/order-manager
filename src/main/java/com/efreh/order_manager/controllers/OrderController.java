@@ -50,7 +50,7 @@ public class OrderController {
         order.getPositionList().add(position);
         model.addAttribute("order", order);
         model.addAttribute("position", new Position());
-        return "orderRedactor";
+        return "redirect:/orderRedactor";
     }
     @PostMapping("/orderRedactor/deletePosition")
     public String deletePosition(@ModelAttribute("order") Order order,
