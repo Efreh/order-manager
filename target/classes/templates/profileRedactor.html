@@ -33,20 +33,20 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" method="post" th:action="@{/registration}" th:object="${user}">
-        <h2 class="form-signin-heading">Регистрация пользователя</h2>
+    <form class="form-signin" method="post" th:action="${user.username == null} ? @{/registration} : @{/employee/saveEditProfile}" th:object="${user}">
+        <h2 class="form-signin-heading" th:text="${user.username == null} ? 'Регистрация пользователя' : 'Изменение профиля пользователя'">Регистрация пользователя</h2>
         <div class="form-group">
             <label for="username" class="sr-only">Username</label>
             <input type="text" id="username" th:field="*{username}" class="form-control"
                    placeholder="Номер телефона (+7...)" required autofocus>
         </div>
-        <div class="form-group">
+        <div class="form-group" th:if="${user.username == null}">
             <label for="password" class="sr-only">Password</label>
             <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Пароль"
                    required>
         </div>
-        <div class="form-group">
-            <label for="passwordConfirm" class="sr-only">Confirm Password</label>
+        <div class="form-group" th:if="${user.username == null}" >
+            <label for="passwordConfirm" class="sr-only" >Confirm Password</label>
             <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" class="form-control"
                    placeholder="Подтвердите пароль" required>
         </div>
@@ -84,8 +84,14 @@
             <input type="text" id="job_title" th:field="*{employee.job_title}" class="form-control"
                    placeholder="Профессия">
         </div>
+        <div class="form-group" th:if="${user.username != null}">
+            <label for="passwordForSave" class="sr-only">Password</label>
+            <input type="password" id="passwordForSave" th:field="*{passwordConfirm}" class="form-control" placeholder="Подтвердите пароль для сохранения"
+                   required>
+        </div>
         <input name="_csrf" type="hidden" th:value="${_csrf.token}"/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрировать</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" th:if="${user.username == null}">Зарегистрировать</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" th:if="${user.username != null}">Сохранить изменения</button>
     </form>
 </div>
 </body>

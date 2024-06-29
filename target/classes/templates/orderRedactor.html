@@ -138,11 +138,11 @@
 <form th:action="@{/orderRedactor}" th:object="${order}" method="post" class="container">
     <div class="form-container">
         <div class="input-field">
-            <label for="date">Дата:</label>
+            Дата:
             <input type="date" id="date" class="validate" th:field="*{date}" required>
         </div>
         <div class="input-field">
-            <label for="workShift">Номер смены:</label>
+            Номер смены:
             <select id="workShift" class="browser-default" th:field="*{workShift}" required>
                 <option value="1">I</option>
                 <option value="2">II</option>

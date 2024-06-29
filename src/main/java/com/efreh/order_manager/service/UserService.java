@@ -2,7 +2,9 @@ package com.efreh.order_manager.service;
 
 import com.efreh.order_manager.dao.EmployeeRepository;
 import com.efreh.order_manager.dao.UserRepository;
+import com.efreh.order_manager.entity.Employee;
 import com.efreh.order_manager.entity.authN.User;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -53,6 +55,27 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
 
         return true;
+    }
+
+    public boolean mergeUser(User user) {
+        User userFromDb = userRepository.findByUsername(user.getUsername());
+        Employee employeeFromDb = userFromDb.getEmployee();
+        if (bCryptPasswordEncoder.matches(user.getPasswordConfirm(), userFromDb.getPassword())) {
+            userFromDb.setUsername(user.getUsername());
+
+            employeeFromDb.setDepartment(user.getEmployee().getDepartment());
+            employeeFromDb.setJob_title(user.getEmployee().getJob_title());
+            employeeFromDb.setName(user.getEmployee().getName());
+            employeeFromDb.setOtchestvo(user.getEmployee().getOtchestvo());
+            employeeFromDb.setSector(user.getEmployee().getSector());
+            employeeFromDb.setSurname(user.getEmployee().getSurname());
+            employeeFromDb.setWork_center(user.getEmployee().getWork_center());
+            employeeFromDb.setLogin_phone(user.getUsername());
+
+            userRepository.save(userFromDb);
+            return true;
+
+        } else return false;
     }
 
     public boolean deleteUser(Long userId) {
