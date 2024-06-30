@@ -37,8 +37,8 @@ public class EmployeeController {
         Employee master = employeeService.getEmpFromDB(user);
         model.addAttribute("master", master);
 
-        // добавть в orderService метод для извлечения всех неподтвержденный нарядов с участка
-        // и отобразить тут же
+        List<Order> orders = orderService.orderMasterForCheck(master.getSector());
+        model.addAttribute("orders",orders);
         return "master";
     }
 }

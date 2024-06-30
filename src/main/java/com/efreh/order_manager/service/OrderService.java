@@ -29,6 +29,10 @@ public class OrderService {
         return orderRepository.findTop5ByEmployeeIdOrderByDateDesc(empId);
     }
 
+    public List<Order> orderMasterForCheck(String sector){
+        return orderRepository.findOrdersBySectorAndMasterCheckFalse(sector);
+    }
+
     public Order findOrderById(Long id) {
         return orderRepository.findById(id).orElse(null);
     }
