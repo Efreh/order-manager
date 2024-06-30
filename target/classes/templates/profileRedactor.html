@@ -33,6 +33,9 @@
 </head>
 <body>
 <div class="container">
+
+    <div th:if="${error}" th:text="Ошибка" class="save-notification"></div>
+
     <form class="form-signin" method="post" th:action="${user.username == null} ? @{/registration} : @{/employee/saveEditProfile}" th:object="${user}">
         <h2 class="form-signin-heading" th:text="${user.username == null} ? 'Регистрация пользователя' : 'Изменение профиля пользователя'">Регистрация пользователя</h2>
         <div class="form-group">

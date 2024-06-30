@@ -4,7 +4,6 @@ import com.efreh.order_manager.dao.EmployeeRepository;
 import com.efreh.order_manager.dao.UserRepository;
 import com.efreh.order_manager.entity.Employee;
 import com.efreh.order_manager.entity.authN.User;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

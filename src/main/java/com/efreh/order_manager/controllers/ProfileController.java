@@ -22,15 +22,15 @@ public class ProfileController {
     }
 
     @PostMapping("/registration")
-    public String registerUser(@ModelAttribute User user, Model model) {
+    public String registerUser(@ModelAttribute User user) {
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
-            model.addAttribute("passwordError", "Passwords ");
             return "profileRedactor";
+        } else {
+
+            userService.saveUser(user);
+
+            return "redirect:/index";
         }
-
-        userService.saveUser(user);
-
-        return "redirect:/index";
     }
 
     @GetMapping("/employee/editProfile")
@@ -42,9 +42,10 @@ public class ProfileController {
     @PostMapping("/employee/saveEditProfile")
     public String saveEditProfile(@ModelAttribute User user, Model model) {
         if (!userService.mergeUser(user)) {
-            model.addAttribute("passwordError", "Passwords ");
+            model.addAttribute("error", false);
             return "profileRedactor";
+        } else {
+            return "redirect:/employee";
         }
-        return "redirect:/employee";
     }
 }

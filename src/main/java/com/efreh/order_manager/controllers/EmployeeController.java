@@ -36,6 +36,9 @@ public class EmployeeController {
     public String masterPage(@AuthenticationPrincipal User user, Model model) {
         Employee master = employeeService.getEmpFromDB(user);
         model.addAttribute("master", master);
+
+        // добавть в orderService метод для извлечения всех неподтвержденный нарядов с участка
+        // и отобразить тут же
         return "master";
     }
 }

@@ -17,7 +17,7 @@ public class Order {
     private int orderId;
 
     @Column(name = "date", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd") //Важно для автовыставления даты на странице, если данные о наряде есть
     private LocalDate date;
 
     @Column(name = "workShift", nullable = false, length = 1)

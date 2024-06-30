@@ -8,5 +8,5 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
 
-    List<User> findByIdGreaterThan(Long id);
+//    List<User> findByIdGreaterThan(Long id);
 }

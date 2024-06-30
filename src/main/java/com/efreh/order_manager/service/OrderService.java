@@ -12,24 +12,24 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public boolean saveOrder(Order order){
+    public boolean saveOrder(Order order) {
         orderRepository.save(order);
         return true;
     }
 
-    public boolean deleteOrder(Long orderId){
-        if (orderRepository.findById(orderId).isPresent()){
+    public boolean deleteOrder(Long orderId) {
+        if (orderRepository.findById(orderId).isPresent()) {
             orderRepository.deleteById(orderId);
             return true;
-        }
-        return false;
+        } else
+            return false;
     }
 
-    public List<Order> lastFiveOrder(Long empId){
+    public List<Order> lastFiveOrder(Long empId) {
         return orderRepository.findTop5ByEmployeeIdOrderByDateDesc(empId);
     }
 
-    public Order findOrderById(Long id){
+    public Order findOrderById(Long id) {
         return orderRepository.findById(id).orElse(null);
     }
 
