@@ -12,4 +12,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT o FROM Order o JOIN o.employee e WHERE e.sector = :sector AND o.masterCheck = false")
     List<Order> findOrdersBySectorAndMasterCheckFalse(@Param("sector") String sector);
+
+    @Query("SELECT o FROM Order o JOIN o.employee e WHERE e.sector = :sector AND o.otkControllerCheck = false")
+    List<Order> findOrdersBySectorAndOtkControllerCheckFalse(@Param("sector") String sector);
 }

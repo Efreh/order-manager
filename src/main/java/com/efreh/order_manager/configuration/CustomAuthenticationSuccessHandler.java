@@ -20,6 +20,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             response.sendRedirect("/master");
         } else if (roles.contains("ROLE_EMPLOYEE")) {
             response.sendRedirect("/employee");
-        } else response.sendRedirect("/");
+        }else if (roles.contains("ROLE_CONTROLLER")){
+            response.sendRedirect("/otkController");
+        }else response.sendRedirect("/");
     }
 }

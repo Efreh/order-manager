@@ -16,26 +16,25 @@ public class OrderViewController {
     OrderService orderService;
 
     @GetMapping("/order/{id}")
-    public String orderView (@PathVariable("id") Long orderId,
-                             @AuthenticationPrincipal User user,
-                             Model model){
+    public String orderView(@PathVariable("id") Long orderId,
+                            @AuthenticationPrincipal User user,
+                            Model model) {
         Order order = orderService.findOrderById(orderId);
-        model.addAttribute("order",order);
-        model.addAttribute("role",user.getRole());
+        model.addAttribute("order", order);
+        model.addAttribute("role", user.getRole());
 
         return "orderView";
     }
 
     @GetMapping("order/confirm/{id}")
-    public String orderMasterConfirm (@PathVariable("id") Long orderId,
-                             @AuthenticationPrincipal User user,
-                             Model model){
-        Order order = orderService.findOrderById(orderId);
-        order.setMasterCheck(true);
-        orderService.saveOrder(order);
-        model.addAttribute("order",order);
-        model.addAttribute("role",user.getRole());
+    public String orderMasterControllerConfirm(@PathVariable("id") Long orderId,
+                                               @AuthenticationPrincipal User user) {
+        orderService.confirmOrder(orderId, user);
 
-        return "redirect:/master";
+        if (user.getRole().equals("ROLE_MASTER")) {
+            return "redirect:/master";
+        } else if (user.getRole().equals("ROLE_CONTROLLER")) {
+            return "redirect:/otkController";
+        } else return "/";
     }
 }

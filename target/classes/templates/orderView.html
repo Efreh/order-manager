@@ -67,6 +67,9 @@
         <a th:if="${role == 'ROLE_MASTER'}" th:href="@{/order/confirm/{id}(id=${order.orderId})}" class="btn waves-effect waves-light">
             <i class="material-icons left">check</i>Подтвердить наряд
         </a>
+        <a th:if="${role == 'ROLE_CONTROLLER'}" th:href="@{/order/confirm/{id}(id=${order.orderId})}" class="btn waves-effect waves-light">
+            <i class="material-icons left">check</i>Подтвердить наряд
+        </a>
     </div>
     <div class="section">
         <h5>Информация о сотруднике и наряде</h5>

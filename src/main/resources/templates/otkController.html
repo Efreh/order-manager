@@ -124,7 +124,7 @@
     <a href="#" class="btn" th:href="@{/orderRedactor}">создать наряд</a>
     <a href="#" class="btn red" th:href="@{/logout}">Выход из сессии</a>
 </div>
-<div class="container" th:object="${employee}">
+<div class="container" th:object="${otkController}">
     <div class="user-info">
         <h5>Данные о сотруднике</h5>
         <div class="employee-data">
@@ -141,10 +141,10 @@
         </div>
     </div>
     <div class="orders-list">
-        <h5>Список последних нарядов</h5>
+        <h5>Список нарядов на проверку</h5>
         <ul class="scrollable-list">
             <li th:each="order : ${orders}">
-                <a th:href="@{/order/{id}(id=${order.orderId})}" th:text="${order.date}"></a>
+                <a th:href="@{/order/{id}(id=${order.orderId})}" th:text="${order.date}+' '+${order.employee.name}+' '+${order.employee.surname}"></a>
             </li>
         </ul>
     </div>

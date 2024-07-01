@@ -44,6 +44,16 @@
         .header-buttons .btn {
             margin: 0 10px;
         }
+        .scrollable-list {
+            max-height: 400px; /* Задайте подходящую высоту, чтобы вместить 7 элементов */
+            overflow-y: auto; /* Вертикальная прокрутка */
+            list-style-type: none; /* Удалить маркеры списка */
+            padding: 0; /* Удалить отступы */
+            margin: 0; /* Удалить внешние отступы */
+        }
+        .scrollable-list li a {
+            text-decoration: none; /* Удалить подчеркивание ссылок */
+        }
         @media (min-width: 768px) {
             .container {
                 flex-direction: row;
@@ -132,7 +142,7 @@
     </div>
     <div class="orders-list">
         <h5>Список последних нарядов</h5>
-        <ul>
+        <ul class="scrollable-list">
             <li th:each="order : ${orders}">
                 <a th:href="@{/order/{id}(id=${order.orderId})}" th:text="${order.date}"></a>
             </li>

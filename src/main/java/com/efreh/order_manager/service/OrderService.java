@@ -1,6 +1,7 @@
 package com.efreh.order_manager.service;
 
 import com.efreh.order_manager.dao.OrderRepository;
+import com.efreh.order_manager.entity.authN.User;
 import com.efreh.order_manager.entity.order.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,12 +26,29 @@ public class OrderService {
             return false;
     }
 
+    public void confirmOrder(Long orderId, User user) {
+        Order order = orderRepository.findById(orderId).orElse(null);
+        String role = user.getRole();
+        if (order != null) {
+            if (role.equals("ROLE_MASTER")) {
+                order.setMasterCheck(true);
+            } else if (role.equals("ROLE_CONTROLLER")) {
+                order.setOtkControllerCheck(true);
+            }
+            saveOrder(order);
+        }
+    }
+
     public List<Order> lastFiveOrder(Long empId) {
         return orderRepository.findTop5ByEmployeeIdOrderByDateDesc(empId);
     }
 
-    public List<Order> orderMasterForCheck(String sector){
+    public List<Order> orderMasterForCheck(String sector) {
         return orderRepository.findOrdersBySectorAndMasterCheckFalse(sector);
+    }
+
+    public List<Order> orderOtkControllerForCheck(String sector) {
+        return orderRepository.findOrdersBySectorAndOtkControllerCheckFalse(sector);
     }
 
     public Order findOrderById(Long id) {
