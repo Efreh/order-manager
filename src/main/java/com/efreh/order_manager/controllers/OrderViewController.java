@@ -37,4 +37,18 @@ public class OrderViewController {
             return "redirect:/otkController";
         } else return "/";
     }
+
+    @GetMapping("order/deleteOrder/{id}")
+    public String deleteOrder(@PathVariable("id") Long orderId,
+                              @AuthenticationPrincipal User user){
+
+        orderService.deleteOrder(orderId,user.getRole());
+
+        return switch (user.getRole()) {
+            case "ROLE_MASTER" -> "redirect:/master";
+            case "ROLE_CONTROLLER" -> "redirect:/otkController";
+            case "ROLE_EMPLOYEE" -> "redirect:/employee";
+            default -> "/";
+        };
+    }
 }

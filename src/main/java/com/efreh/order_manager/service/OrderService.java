@@ -18,12 +18,21 @@ public class OrderService {
         return true;
     }
 
-    public boolean deleteOrder(Long orderId) {
-        if (orderRepository.findById(orderId).isPresent()) {
+    public boolean deleteOrder(Long orderId, String role) {
+        Order order = orderRepository.findById(orderId).orElse(null);
+        if (order == null) {
+            return false;
+        }
+
+        boolean isMaster = role.equals("ROLE_MASTER");
+        boolean isEligibleEmployee = role.equals("ROLE_EMPLOYEE") && !order.isMasterCheck() && !order.isOtkControllerCheck();
+
+        if (isMaster || isEligibleEmployee) {
             orderRepository.deleteById(orderId);
             return true;
-        } else
-            return false;
+        }
+
+        return false;
     }
 
     public void confirmOrder(Long orderId, User user) {

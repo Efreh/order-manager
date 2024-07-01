@@ -144,7 +144,9 @@
         <h5>Список нарядов на проверку</h5>
         <ul class="scrollable-list">
             <li th:each="order : ${orders}">
-                <a th:href="@{/order/{id}(id=${order.orderId})}" th:text="${order.date}+' '+${order.employee.name}+' '+${order.employee.surname}"></a>
+                <a th:href="@{/order/{id}(id=${order.orderId})}"
+                   th:text="${order.date}+' Смена № '+${order.workShift}+' '+${order.employee.name}+' '+${order.employee.surname}">
+                </a>
             </li>
         </ul>
     </div>

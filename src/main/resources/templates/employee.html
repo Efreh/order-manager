@@ -144,7 +144,7 @@
         <h5>Список последних нарядов</h5>
         <ul class="scrollable-list">
             <li th:each="order : ${orders}">
-                <a th:href="@{/order/{id}(id=${order.orderId})}" th:text="${order.date}"></a>
+                <a th:href="@{/order/{id}(id=${order.orderId})}" th:text="${order.date}+' Смена № '+${order.workShift}"></a>
             </li>
         </ul>
     </div>

@@ -61,14 +61,17 @@
         <a href="javascript:history.back()" class="btn waves-effect waves-light">
             <i class="material-icons left">arrow_back</i>Назад
         </a>
-        <a th:if="${role == 'ROLE_EMPLOYEE'}" th:href="@{/orderRedactor/{id}(id=${order.orderId})}" class="btn waves-effect waves-light">
+        <a th:if="${role == 'ROLE_EMPLOYEE'}" th:href="@{/orderRedactor/{id}(id=${order.orderId})}"
+           class="btn waves-effect waves-light">
             <i class="material-icons left">edit</i>Редактировать
         </a>
-        <a th:if="${role == 'ROLE_MASTER'}" th:href="@{/order/confirm/{id}(id=${order.orderId})}" class="btn waves-effect waves-light">
+        <a th:if="${role == 'ROLE_MASTER' or role == 'ROLE_CONTROLLER'}"
+           th:href="@{/order/confirm/{id}(id=${order.orderId})}" class="btn waves-effect waves-light">
             <i class="material-icons left">check</i>Подтвердить наряд
         </a>
-        <a th:if="${role == 'ROLE_CONTROLLER'}" th:href="@{/order/confirm/{id}(id=${order.orderId})}" class="btn waves-effect waves-light">
-            <i class="material-icons left">check</i>Подтвердить наряд
+        <a th:if="(${role == 'ROLE_MASTER'} or (${role == 'ROLE_EMPLOYEE'} and ${order.masterCheck == false} and ${order.otkControllerCheck == false}))"
+           th:href="@{/order/deleteOrder/{id}(id=${order.orderId})}" class="btn red waves-effect waves-light">
+            <i class="material-icons left">check</i>Удалить наряд
         </a>
     </div>
     <div class="section">
