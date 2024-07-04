@@ -31,7 +31,7 @@ public class OrderService {
             return false;
         }
 
-        boolean isMaster = role.equals("ROLE_MASTER");
+        boolean isMaster = role.equals("ROLE_MASTER") && !order.isMasterCheck() && !order.isOtkControllerCheck();
         boolean isEligibleEmployee = role.equals("ROLE_EMPLOYEE") && !order.isMasterCheck() && !order.isOtkControllerCheck();
 
         if (isMaster || isEligibleEmployee) {
