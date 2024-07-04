@@ -1,18 +1,24 @@
 package com.efreh.order_manager.service;
 
+import com.efreh.order_manager.dao.EmployeeRepository;
 import com.efreh.order_manager.dao.OrderRepository;
+import com.efreh.order_manager.entity.Employee;
 import com.efreh.order_manager.entity.authN.User;
 import com.efreh.order_manager.entity.order.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public boolean saveOrder(Order order) {
         orderRepository.save(order);
@@ -65,8 +71,19 @@ public class OrderService {
         return orderRepository.findById(id).orElse(null);
     }
 
-    public List<Order> findOrderByDateAndWorkShift(LocalDate date,int workShift){
-        return orderRepository.findByDateAndWorkShift(date,workShift);
+    public List<Order> findOrderByDateAndWorkShiftAndEmployee(LocalDate date,int workShift, Employee employee){
+        return orderRepository.findByDateAndWorkShiftAndEmployee(date,workShift,employee);
+    }
+    public List<Order> findOrderByDateAndWorkShiftAndEmployee(LocalDate date,int workShift,String surname, String name){
+        List<Employee> employees = employeeRepository.findBySurnameAndName(surname,name);
+        List<Order> orders = new ArrayList<>();
+        if (!employees.isEmpty()){
+            for (Employee employee : employees){
+                orders.addAll(orderRepository.findByDateAndWorkShiftAndEmployee(date,workShift,employee));
+            }
+        }
+
+        return orders;
     }
 
 }

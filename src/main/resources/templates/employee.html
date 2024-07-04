@@ -138,9 +138,9 @@
 </div>
 <div class="toggle-block" id="toggle-block"
      th:attr="style=${findOrders != null} ? 'display: block;' : 'display: none;'">
-    <form th:action="@{/employee}" method="post">
+    <form th:action="@{/employee/findOrder}" method="get">
         <div class="input-field">
-            <input type="text" class="datepicker" id="date" name="date">
+            <input type="text" class="datepicker" id="date" name="date" required>
             <label for="date">Выбор даты</label>
         </div>
         <div class="input-field">

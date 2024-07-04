@@ -8,6 +8,8 @@
     <style>
         body {
             display: flex;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
             margin: 0;
             background-color: #ffbe98; /* Персиковый цвет */
@@ -18,7 +20,7 @@
             flex-grow: 1;
             padding: 20px;
         }
-        .user-info, .orders-list {
+        .user-info, .orders-list, .find-orders-list{
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -81,14 +83,14 @@
                 padding-top: 70px;
             }
         }
-        .orders-list ul {
+        .orders-list ul, .find-orders-list ul{
             list-style-type: none;
             padding: 0;
         }
-        .orders-list li {
+        .orders-list li , .find-orders-list li{
             margin-bottom: 10px;
         }
-        .orders-list a {
+        .orders-list a, .find-orders-list a{
             display: block;
             padding: 10px;
             border-radius: 4px;
@@ -97,7 +99,7 @@
             text-align: center;
             text-decoration: none;
         }
-        .orders-list a:hover {
+        .orders-list a:hover, .find-orders-list a:hover{
             background-color: #00796b; /* Цвет ссылок при наведении */
         }
         .employee-data p {
@@ -116,14 +118,63 @@
             justify-content: center;
             margin-top: 20px;
         }
+        .toggle-block {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 50%;
+        }
     </style>
 </head>
 <body>
 <div class="row header">
-    <a href="#" class="btn" th:href="@{/find-order}">найти наряд</a>
+    <a href="#" class="btn" id="find-order-btn">найти наряд</a>
     <a href="#" class="btn" th:href="@{/orderRedactor}">создать наряд</a>
     <a href="#" class="btn red" th:href="@{/logout}">Выход из сессии</a>
 </div>
+
+<div class="toggle-block" id="toggle-block"
+     th:attr="style=${findOrders != null} ? 'display: block;' : 'display: none;'">
+    <form th:action="@{/employee/findOrderMaster}" method="get">
+        <div class="input-field">
+            <input type="text" class="datepicker" id="date" name="date" required>
+            <label for="date">Выбор даты</label>
+        </div>
+        <div class="input-field">
+            <select id="shift" name="shift">
+                <option value="1">I</option>
+                <option value="2">II</option>
+            </select>
+            <label for="shift">Выбор смены</label>
+        </div>
+        <div class="input-field">
+            <input type="text" class="text" id="surname" name="surname" required>
+            <label for="surname">Фамилия работника</label>
+        </div>
+        <div class="input-field">
+            <input type="text" class="text" id="name" name="name" required>
+            <label for="name">Имя работника</label>
+        </div>
+
+        <div class="edit-button">
+            <button type="submit" class="btn center">Найти наряд</button>
+        </div>
+    </form>
+    <div class="find-orders-list" th:if="${findOrders != null}">
+        <h5 style="text-align: center">Список найденных нарядов</h5>
+        <ul class="scrollable-list">
+            <li th:each="order : ${findOrders}">
+                <a th:href="@{/order/{id}(id=${order.orderId})}"
+                   th:text="${order.date}+' Смена № '+${order.workShift}"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
 <div class="container" th:object="${master}">
     <div class="user-info">
         <h5>Данные о сотруднике</h5>
@@ -152,5 +203,26 @@
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    document.getElementById('find-order-btn').addEventListener('click', function(event) {
+        event.preventDefault();
+        var toggleBlock = document.getElementById('toggle-block');
+        if (toggleBlock.style.display === 'none' || toggleBlock.style.display === '') {
+            toggleBlock.style.display = 'block';
+        } else {
+            toggleBlock.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        M.FormSelect.init(elems);
+
+        var datepickerElems = document.querySelectorAll('.datepicker');
+        M.Datepicker.init(datepickerElems, {
+            format: 'yyyy-mm-dd'
+        });
+    });
+</script>
 </body>
 </html>
