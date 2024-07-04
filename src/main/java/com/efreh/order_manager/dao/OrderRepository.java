@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    List<Order> findTop5ByEmployeeIdOrderByDateDesc(Long employeeId);
+    List<Order> findTop5ByEmployeeEmployeeIdOrderByDateDesc(Long employeeId);
 
     List<Order> findByDateAndWorkShiftAndEmployee(LocalDate date, int workShift, Employee employee);
 

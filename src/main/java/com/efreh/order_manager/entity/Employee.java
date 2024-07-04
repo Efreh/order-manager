@@ -1,111 +1,64 @@
 package com.efreh.order_manager.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "employees")
+@Data
+@NoArgsConstructor
 public class Employee {
+    private static final String NOT_NULL_MESSAGE = "Поле не должно быть пустым";
+    private static final String RU_PATTERN = "^[а-яА-Я]+$";
+    private static final String MAX_LENGTH_20_MESSAGE = "Максимальная длина поля - 20 символов";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employeeId")
     private Long employeeId;
 
-    @Column(name = "login_phone", unique = true, nullable = false, length = 20)
+    @Column(name = "login_phone", unique = true, nullable = false, length = 10)
+    @NotBlank(message = NOT_NULL_MESSAGE)
+    @Size(min = 10, max = 10, message = "Длинна номера должна быть 10 символов")
+    @Pattern(regexp = "^\\d+$", message = "Поле должно содержать только цифры.")
     private String login_phone;
 
     @Column(name = "name", nullable = false, length = 20)
+    @NotBlank(message = NOT_NULL_MESSAGE)
+    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
+    @Pattern(regexp = RU_PATTERN)
     private String name;
 
     @Column(name = "otchestvo", length = 20)
+    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
+    @Pattern(regexp = RU_PATTERN)
     private String otchestvo;
 
     @Column(name = "surname", nullable = false, length = 20)
+    @NotBlank(message = NOT_NULL_MESSAGE)
+    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
+    @Pattern(regexp = RU_PATTERN)
     private String surname;
 
     @Column(name = "department", nullable = false, length = 20)
+    @NotBlank(message = NOT_NULL_MESSAGE)
+    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
     private String department;
 
-    @Column(name = "sector", nullable = false, length = 20)
+    @Column(name = "sector", nullable = false, length = 10)
+    @NotBlank(message = NOT_NULL_MESSAGE)
+    @Size(max = 10, message = "Максимальная длинна поля - 10 символов")
     private String sector;
 
     @Column(name = "work_center", length = 20)
+    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
     private String work_center;
 
     @Column(name = "job_title", length = 20)
+    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
     private String job_title;
-
-    public Employee() {
-    }
-
-    public Long getId() {
-        return employeeId;
-    }
-
-    public void setId(Long employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getLogin_phone() {
-        return login_phone;
-    }
-
-    public void setLogin_phone(String login_phone) {
-        this.login_phone = login_phone;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getOtchestvo() {
-        return otchestvo;
-    }
-
-    public void setOtchestvo(String otchestvo) {
-        this.otchestvo = otchestvo;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public String getSector() {
-        return sector;
-    }
-
-    public void setSector(String sector) {
-        this.sector = sector;
-    }
-
-    public String getWork_center() {
-        return work_center;
-    }
-
-    public void setWork_center(String work_center) {
-        this.work_center = work_center;
-    }
-
-    public String getJob_title() {
-        return job_title;
-    }
-
-    public void setJob_title(String job_title) {
-        this.job_title = job_title;
-    }
 }

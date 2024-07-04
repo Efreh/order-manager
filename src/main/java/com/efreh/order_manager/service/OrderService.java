@@ -56,7 +56,7 @@ public class OrderService {
     }
 
     public List<Order> lastFiveOrder(Long empId) {
-        return orderRepository.findTop5ByEmployeeIdOrderByDateDesc(empId);
+        return orderRepository.findTop5ByEmployeeEmployeeIdOrderByDateDesc(empId);
     }
 
     public List<Order> orderMasterForCheck(String sector) {

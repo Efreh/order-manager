@@ -24,7 +24,7 @@ public class EmployeeController {
         Employee employee = user.getEmployee();
         model.addAttribute("employee", employee);
 
-        List<Order> orders = orderService.lastFiveOrder(employee.getId());
+        List<Order> orders = orderService.lastFiveOrder(employee.getEmployeeId());
         model.addAttribute("orders", orders);
 
         return "employee";
@@ -58,7 +58,7 @@ public class EmployeeController {
         Employee employee = user.getEmployee();
         model.addAttribute("employee", employee);
 
-        List<Order> orders = orderService.lastFiveOrder(employee.getId());
+        List<Order> orders = orderService.lastFiveOrder(employee.getEmployeeId());
         model.addAttribute("orders", orders);
 
         List<Order> findOrders = orderService.findOrderByDateAndWorkShiftAndEmployee(date,workShift,employee);
