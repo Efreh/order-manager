@@ -2,6 +2,12 @@ package com.efreh.order_manager.entity.order;
 
 import com.efreh.order_manager.entity.Employee;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -10,6 +16,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@Data
+@NoArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +26,13 @@ public class Order {
 
     @Column(name = "date", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd") //Важно для автовыставления даты на странице, если данные о наряде есть
+    @NotNull
     private LocalDate date;
 
-    @Column(name = "workShift", nullable = false, length = 1)
+    @Column(name = "workShift")
+//    @NotNull(message = "Поле не должно быть пустым")
+//    @Size(min = 1, max = 1, message = "Длинна должна быть 1 символ")
+//    @Pattern(regexp = "^\\d+$", message = "Поле должно содержать только цифры.")
     private int workShift;
 
     @ManyToOne
@@ -34,63 +46,4 @@ public class Order {
 
     @Column(name = "otkControllerCheck", columnDefinition = "boolean default false")
     private boolean otkControllerCheck;
-
-    public Order() {
-    }
-
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public int getWorkShift() {
-        return workShift;
-    }
-
-    public void setWorkShift(int workShift) {
-        this.workShift = workShift;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public List<Position> getPositionList() {
-        return positionList;
-    }
-
-    public void setPositionList(List<Position> positionList) {
-        this.positionList = positionList;
-    }
-
-    public boolean isMasterCheck() {
-        return masterCheck;
-    }
-
-    public void setMasterCheck(boolean masterCheck) {
-        this.masterCheck = masterCheck;
-    }
-
-    public boolean isOtkControllerCheck() {
-        return otkControllerCheck;
-    }
-
-    public void setOtkControllerCheck(boolean otkControllerCheck) {
-        this.otkControllerCheck = otkControllerCheck;
-    }
 }

@@ -35,60 +35,91 @@
 <div class="container">
     <form class="form-signin" method="post" th:action="${user.username == null} ? @{/registration} : @{/employee/saveEditProfile}" th:object="${user}">
         <h2 class="form-signin-heading" th:text="${user.username == null} ? 'Регистрация пользователя' : 'Изменение профиля пользователя'">Регистрация пользователя</h2>
+
+        <!-- Username field with error message -->
         <div class="form-group">
             <label for="username" class="sr-only">Username</label>
             <input type="text" id="username" th:field="*{username}" class="form-control"
                    placeholder="Номер телефона (+7...)" required autofocus>
+            <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger" role="alert" th:errors="*{username}">Ошибка в номере телефона</div>
         </div>
+
+        <!-- Password fields with error messages -->
         <div class="form-group" th:if="${user.username == null}">
             <label for="password" class="sr-only">Password</label>
             <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Пароль"
                    required>
+            <div th:if="${#fields.hasErrors('password')}" class="alert alert-danger" role="alert" th:errors="*{password}">Ошибка в пароле</div>
         </div>
-        <div class="form-group" th:if="${user.username == null}" >
-            <label for="passwordConfirm" class="sr-only" >Confirm Password</label>
+        <div class="form-group" th:if="${user.username == null}">
+            <label for="passwordConfirm" class="sr-only">Confirm Password</label>
             <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" class="form-control"
                    placeholder="Подтвердите пароль" required>
+            <div th:if="${#fields.hasErrors('passwordConfirm')}" class="alert alert-danger" role="alert" th:errors="*{passwordConfirm}">Ошибка в подтверждении пароля</div>
         </div>
+
+        <!-- Name field with error message -->
         <div class="form-group">
             <label for="name" class="sr-only">Name</label>
             <input type="text" id="name" th:field="*{employee.name}" class="form-control" placeholder="Имя" required>
+            <div th:if="${#fields.hasErrors('employee.name')}" class="alert alert-danger" role="alert" th:errors="*{employee.name}">Ошибка в имени</div>
         </div>
+
+        <!-- Otchestvo field with error message -->
         <div class="form-group">
             <label for="otchestvo" class="sr-only">Otchestvo</label>
-            <input type="text" id="otchestvo" th:field="*{employee.otchestvo}" class="form-control"
-                   placeholder="Отчество">
+            <input type="text" id="otchestvo" th:field="*{employee.otchestvo}" class="form-control" placeholder="Отчество">
+            <div th:if="${#fields.hasErrors('employee.otchestvo')}" class="alert alert-danger" role="alert" th:errors="*{employee.otchestvo}">Ошибка в отчестве</div>
         </div>
+
+        <!-- Surname field with error message -->
         <div class="form-group">
             <label for="surname" class="sr-only">Surname</label>
             <input type="text" id="surname" th:field="*{employee.surname}" class="form-control" placeholder="Фамилия"
                    required>
+            <div th:if="${#fields.hasErrors('employee.surname')}" class="alert alert-danger" role="alert" th:errors="*{employee.surname}">Ошибка в фамилии</div>
         </div>
+
+        <!-- Department field with error message -->
         <div class="form-group">
             <label for="department" class="sr-only">Department</label>
             <input type="text" id="department" th:field="*{employee.department}" class="form-control" placeholder="Цех"
                    required>
+            <div th:if="${#fields.hasErrors('employee.department')}" class="alert alert-danger" role="alert" th:errors="*{employee.department}">Ошибка в цехе</div>
         </div>
+
+        <!-- Sector field with error message -->
         <div class="form-group">
             <label for="sector" class="sr-only">Sector</label>
             <input type="text" id="sector" th:field="*{employee.sector}" class="form-control" placeholder="Участок"
                    required>
+            <div th:if="${#fields.hasErrors('employee.sector')}" class="alert alert-danger" role="alert" th:errors="*{employee.sector}">Ошибка в участке</div>
         </div>
+
+        <!-- Work Center field with error message -->
         <div class="form-group">
             <label for="work_center" class="sr-only">Work Center</label>
             <input type="text" id="work_center" th:field="*{employee.work_center}" class="form-control"
                    placeholder="Рабочий центр">
+            <div th:if="${#fields.hasErrors('employee.work_center')}" class="alert alert-danger" role="alert" th:errors="*{employee.work_center}">Ошибка в рабочем центре</div>
         </div>
+
+        <!-- Job Title field with error message -->
         <div class="form-group">
             <label for="job_title" class="sr-only">Job Title</label>
             <input type="text" id="job_title" th:field="*{employee.job_title}" class="form-control"
                    placeholder="Профессия">
+            <div th:if="${#fields.hasErrors('employee.job_title')}" class="alert alert-danger" role="alert" th:errors="*{employee.job_title}">Ошибка в профессии</div>
         </div>
+
+        <!-- Password field for saving changes with error message -->
         <div class="form-group" th:if="${user.username != null}">
             <label for="passwordForSave" class="sr-only">Password</label>
             <input type="password" id="passwordForSave" th:field="*{passwordConfirm}" class="form-control" placeholder="Подтвердите пароль для сохранения"
                    required>
+            <div th:if="${#fields.hasErrors('passwordConfirm')}" class="alert alert-danger" role="alert" th:errors="*{passwordConfirm}">Ошибка в подтверждении пароля</div>
         </div>
+
         <input name="_csrf" type="hidden" th:value="${_csrf.token}"/>
         <button class="btn btn-lg btn-primary btn-block" type="submit" th:if="${user.username == null}">Зарегистрировать</button>
         <button class="btn btn-lg btn-primary btn-block" type="submit" th:if="${user.username != null}">Сохранить изменения</button>
