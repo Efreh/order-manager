@@ -2,6 +2,7 @@ package com.efreh.order_manager.entity.authN;
 
 import com.efreh.order_manager.entity.Employee;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -30,18 +31,24 @@ public class User implements UserDetails {
     @Pattern(regexp = "^\\d+$", message = "Поле должно содержать только цифры.")
     private String username;
 
-    @Column
-//    @Size(max = 30, message = "Минимальная длинна пароля: 8 символов")
-//    @Pattern(regexp = "^(?=.*\\d)[a-zA-Z0-9\\p{L}\\p{M}&&[^ ]]+$", message = "Поле должно содержать минимум 1 цифру, без пробелов")
-    private String password;
+    @Transient
+    @NotBlank(message = "Поле не должно быть пустым")
+    @Size(min = 8, message = "Минимальная длинна пароля: 8 символов")
+    @Pattern(regexp = "^(?=.*\\d)[a-zA-Z0-9\\p{L}\\p{M}&&[^ ]]+$", message = "Поле должно содержать минимум 1 цифру, без пробелов")
+    private String passwordTransient;
 
     @Transient
-//    @Size(max = 30, message = "Минимальная длинна пароля: 8 символов")
-//    @Pattern(regexp = "^(?=.*\\d)[a-zA-Z0-9\\p{L}\\p{M}&&[^ ]]+$", message = "Поле должно содержать минимум 1 цифру, без пробелов")
-    private String passwordConfirm;
+    @NotBlank(message = "Поле не должно быть пустым")
+    @Size(min = 8, message = "Минимальная длинна пароля: 8 символов")
+    @Pattern(regexp = "^(?=.*\\d)[a-zA-Z0-9\\p{L}\\p{M}&&[^ ]]+$", message = "Поле должно содержать минимум 1 цифру, без пробелов")
+    private String passwordConfirmTransient;
+
+    @Column
+    private String encryptedPassword;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
+    @Valid
     private Employee employee;
 
     @Column(length = 20)
@@ -56,7 +63,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return encryptedPassword;
     }
 
     @Override

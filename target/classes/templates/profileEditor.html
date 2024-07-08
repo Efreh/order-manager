@@ -33,8 +33,8 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" method="post" th:action="${user.username == null} ? @{/registration} : @{/employee/saveEditProfile}" th:object="${user}">
-        <h2 class="form-signin-heading" th:text="${user.username == null} ? 'Регистрация пользователя' : 'Изменение профиля пользователя'">Регистрация пользователя</h2>
+    <form class="form-signin" method="post" th:action="@{/employee/profileEditor}" th:object="${user}">
+        <h2 class="form-signin-heading">Изменение профиля пользователя</h2>
 
         <!-- Username field with error message -->
         <div class="form-group">
@@ -42,20 +42,6 @@
             <input type="text" id="username" th:field="*{username}" class="form-control"
                    placeholder="Номер телефона (+7...)" required autofocus>
             <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger" role="alert" th:errors="*{username}">Ошибка в номере телефона</div>
-        </div>
-
-        <!-- Password fields with error messages -->
-        <div class="form-group" th:if="${user.username == null}">
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Пароль"
-                   required>
-            <div th:if="${#fields.hasErrors('password')}" class="alert alert-danger" role="alert" th:errors="*{password}">Ошибка в пароле</div>
-        </div>
-        <div class="form-group" th:if="${user.username == null}">
-            <label for="passwordConfirm" class="sr-only">Confirm Password</label>
-            <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" class="form-control"
-                   placeholder="Подтвердите пароль" required>
-            <div th:if="${#fields.hasErrors('passwordConfirm')}" class="alert alert-danger" role="alert" th:errors="*{passwordConfirm}">Ошибка в подтверждении пароля</div>
         </div>
 
         <!-- Name field with error message -->
@@ -113,7 +99,7 @@
         </div>
 
         <!-- Password field for saving changes with error message -->
-        <div class="form-group" th:if="${user.username != null}">
+        <div class="form-group">
             <label for="passwordForSave" class="sr-only">Password</label>
             <input type="password" id="passwordForSave" th:field="*{passwordConfirm}" class="form-control" placeholder="Подтвердите пароль для сохранения"
                    required>
@@ -121,8 +107,7 @@
         </div>
 
         <input name="_csrf" type="hidden" th:value="${_csrf.token}"/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" th:if="${user.username == null}">Зарегистрировать</button>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" th:if="${user.username != null}">Сохранить изменения</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Сохранить изменения</button>
     </form>
 </div>
 </body>

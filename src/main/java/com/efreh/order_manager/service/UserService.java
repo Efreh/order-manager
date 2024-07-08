@@ -50,7 +50,7 @@ public class UserService implements UserDetailsService {
         user.getEmployee().setLogin_phone(user.getUsername());
 
         user.setRole("ROLE_EMPLOYEE");
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPasswordTransient()));
         userRepository.save(user);
 
         return true;
@@ -59,7 +59,7 @@ public class UserService implements UserDetailsService {
     public boolean mergeUser(User user) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
         Employee employeeFromDb = userFromDb.getEmployee();
-        if (bCryptPasswordEncoder.matches(user.getPasswordConfirm(), userFromDb.getPassword())) {
+        if (bCryptPasswordEncoder.matches(user.getPasswordConfirmTransient(), userFromDb.getPassword())) {
             userFromDb.setUsername(user.getUsername());
 
             employeeFromDb.setDepartment(user.getEmployee().getDepartment());
@@ -83,5 +83,9 @@ public class UserService implements UserDetailsService {
             return true;
         }
         return false;
+    }
+
+    public boolean uniqueUser(User user){
+        return userRepository.findByUsername(user.getUsername()) == null;
     }
 }

@@ -20,33 +20,38 @@ public class ProfileController {
     @GetMapping("/registration")
     public String showRegistrationPage(Model model) {
         model.addAttribute("user", new User());
-        return "profileRedactor";
+        return "registration";
     }
 
     @PostMapping("/registration")
-    public String registerUser(@ModelAttribute("user")  User user, BindingResult result) {
-        if (!user.getPassword().equals(user.getPasswordConfirm()) || result.hasErrors()) {
-            return "profileRedactor";
+    public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
+        if (!user.getPasswordTransient().equals(user.getPasswordConfirmTransient())) {
+            result.rejectValue("passwordConfirmTransient", "error.user", "Пароли не совпадают");
+        }
+        if (!userService.uniqueUser(user)){
+            result.rejectValue("username","error.user","Номер уже зарегестрирован");
+        }
+
+        if (result.hasErrors()) {
+            return "registration";
         } else {
-
             userService.saveUser(user);
-
             return "redirect:/index";
         }
     }
 
-    @GetMapping("/employee/editProfile")
+    @GetMapping("/employee/profileEditor")
     public String editProfile(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
-        return "profileRedactor";
+        return "profileEditor";
     }
 
-    @PostMapping("/employee/saveEditProfile")
+    @PostMapping("/employee/profileEditor")
     public String saveEditProfile(@ModelAttribute("user")  User user,
                                   BindingResult result,
                                   Model model) {
         if (!userService.mergeUser(user) || result.hasErrors()) {
-            return "profileRedactor";
+            return "profileEditor";
         } else {
             return "redirect:/employee";
         }

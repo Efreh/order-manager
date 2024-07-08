@@ -22,26 +22,23 @@ public class Employee {
     private Long employeeId;
 
     @Column(name = "login_phone", unique = true, nullable = false, length = 10)
-    @NotBlank(message = NOT_NULL_MESSAGE)
-    @Size(min = 10, max = 10, message = "Длинна номера должна быть 10 символов")
-    @Pattern(regexp = "^\\d+$", message = "Поле должно содержать только цифры.")
     private String login_phone;
 
     @Column(name = "name", nullable = false, length = 20)
     @NotBlank(message = NOT_NULL_MESSAGE)
     @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
-    @Pattern(regexp = RU_PATTERN)
+    @Pattern(regexp = RU_PATTERN, message = "Поле должно содержать только кирилические символы")
     private String name;
 
     @Column(name = "otchestvo", length = 20)
     @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
-    @Pattern(regexp = RU_PATTERN)
+    @Pattern(regexp = RU_PATTERN, message = "Поле должно содержать только кирилические символы")
     private String otchestvo;
 
     @Column(name = "surname", nullable = false, length = 20)
     @NotBlank(message = NOT_NULL_MESSAGE)
     @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
-    @Pattern(regexp = RU_PATTERN)
+    @Pattern(regexp = RU_PATTERN, message = "Поле должно содержать только кирилические символы")
     private String surname;
 
     @Column(name = "department", nullable = false, length = 20)
