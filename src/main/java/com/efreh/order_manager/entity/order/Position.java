@@ -31,7 +31,7 @@ public class Position {
     private String orderPosition;
 
     @Column(name = "amount", length = 10)
-//    @NotNull(message = "Поле не должно быть пустым")
+//    @NotNull(message = "Поле не должно быть пустым")lo
 //    @Size(max = 10, message = "Длинна должна быть не более 10 символов")
     private int amount;
 

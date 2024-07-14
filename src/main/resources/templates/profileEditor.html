@@ -101,9 +101,9 @@
         <!-- Password field for saving changes with error message -->
         <div class="form-group">
             <label for="passwordForSave" class="sr-only">Password</label>
-            <input type="password" id="passwordForSave" th:field="*{passwordConfirm}" class="form-control" placeholder="Подтвердите пароль для сохранения"
+            <input type="password" id="passwordForSave" th:field="*{passwordConfirmTransient}" class="form-control" placeholder="Подтвердите пароль для сохранения"
                    required>
-            <div th:if="${#fields.hasErrors('passwordConfirm')}" class="alert alert-danger" role="alert" th:errors="*{passwordConfirm}">Ошибка в подтверждении пароля</div>
+            <div th:if="${#fields.hasErrors('passwordConfirmTransient')}" class="alert alert-danger" role="alert" th:errors="*{passwordConfirmTransient}">Ошибка в подтверждении пароля</div>
         </div>
 
         <input name="_csrf" type="hidden" th:value="${_csrf.token}"/>

@@ -2,10 +2,7 @@ package com.efreh.order_manager.entity.order;
 
 import com.efreh.order_manager.entity.Employee;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,19 +23,17 @@ public class Order {
 
     @Column(name = "date", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd") //Важно для автовыставления даты на странице, если данные о наряде есть
-    @NotNull
+    @NotNull(message = "Укажите дату")
     private LocalDate date;
 
     @Column(name = "workShift")
-//    @NotNull(message = "Поле не должно быть пустым")
-//    @Size(min = 1, max = 1, message = "Длинна должна быть 1 символ")
-//    @Pattern(regexp = "^\\d+$", message = "Поле должно содержать только цифры.")
     private int workShift;
 
     @ManyToOne
     private Employee employee;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @NotEmpty(message = "Добавьте хотя бы 1 позицию")
     private List<Position> positionList = new ArrayList<>();
 
     @Column(name = "masterCheck", columnDefinition = "boolean default false")
