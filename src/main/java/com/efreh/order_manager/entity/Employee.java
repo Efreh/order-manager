@@ -12,50 +12,33 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Employee {
-    private static final String NOT_NULL_MESSAGE = "Поле не должно быть пустым";
-    private static final String RU_PATTERN = "^[а-яА-Я]+$";
-    private static final String MAX_LENGTH_20_MESSAGE = "Максимальная длина поля - 20 символов";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "employeeId")
+    @Column
     private Long employeeId;
 
-    @Column(name = "login_phone", unique = true, nullable = false, length = 10)
-    private String login_phone;
+    @Column(unique = true, nullable = false, length = 10)
+    private String phoneNumber;
 
-    @Column(name = "name", nullable = false, length = 20)
-    @NotBlank(message = NOT_NULL_MESSAGE)
-    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
-    @Pattern(regexp = RU_PATTERN, message = "Поле должно содержать только кирилические символы")
+    @Column(nullable = false, length = 20)
     private String name;
 
-    @Column(name = "otchestvo", length = 20)
-    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
-    @Pattern(regexp = RU_PATTERN, message = "Поле должно содержать только кирилические символы")
+    @Column(length = 20)
     private String otchestvo;
 
-    @Column(name = "surname", nullable = false, length = 20)
-    @NotBlank(message = NOT_NULL_MESSAGE)
-    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
-    @Pattern(regexp = RU_PATTERN, message = "Поле должно содержать только кирилические символы")
+    @Column(nullable = false, length = 20)
     private String surname;
 
-    @Column(name = "department", nullable = false, length = 20)
-    @NotBlank(message = NOT_NULL_MESSAGE)
-    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
+    @Column(nullable = false, length = 20)
     private String department;
 
-    @Column(name = "sector", nullable = false, length = 10)
-    @NotBlank(message = NOT_NULL_MESSAGE)
-    @Size(max = 10, message = "Максимальная длинна поля - 10 символов")
+    @Column(nullable = false, length = 10)
     private String sector;
 
-    @Column(name = "work_center", length = 20)
-    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
-    private String work_center;
+    @Column(length = 20)
+    private String workCenter;
 
-    @Column(name = "job_title", length = 20)
-    @Size(max = 20, message = MAX_LENGTH_20_MESSAGE)
-    private String job_title;
+    @Column(length = 20)
+    private String jobTitle;
 }

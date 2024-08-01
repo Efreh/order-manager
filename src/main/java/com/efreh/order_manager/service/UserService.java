@@ -2,6 +2,7 @@ package com.efreh.order_manager.service;
 
 import com.efreh.order_manager.dao.EmployeeRepository;
 import com.efreh.order_manager.dao.UserRepository;
+import com.efreh.order_manager.dto.UserDTO;
 import com.efreh.order_manager.entity.Employee;
 import com.efreh.order_manager.entity.authN.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByPhoneNumber(username);
         if (user == null) {
             throw new UsernameNotFoundException("User is not found");
         }
@@ -41,35 +42,48 @@ public class UserService implements UserDetailsService {
 //        return userRepository.findAll();
 //    }
 
-    public boolean saveUser(User user) {
-        User userFromDb = userRepository.findByUsername(user.getUsername());
+    public boolean saveUser(UserDTO userDTO) {
+        User userFromDb = userRepository.findByPhoneNumber(userDTO.getPhoneNumber());
         if (userFromDb != null) {
             return false;
         }
 
-        user.getEmployee().setLogin_phone(user.getUsername());
-
+        User user = new User();
+        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         user.setRole("ROLE_EMPLOYEE");
-        user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPasswordTransient()));
+
+        Employee employee = new Employee();
+        employee.setPhoneNumber(userDTO.getPhoneNumber());
+        employee.setName(userDTO.getName());
+        employee.setOtchestvo(userDTO.getOtchestvo());
+        employee.setSurname(userDTO.getSurname());
+        employee.setDepartment(userDTO.getDepartment());
+        employee.setSector(userDTO.getSector());
+        employee.setWorkCenter(userDTO.getWorkCenter());
+        employee.setJobTitle(userDTO.getJobTitle());
+
+        user.setEmployee(employee);
+
         userRepository.save(user);
 
         return true;
     }
 
-    public boolean mergeUser(User user) {
-        User userFromDb = userRepository.findByUsername(user.getUsername());
+    public boolean mergeUser(UserDTO userDTO) {
+        User userFromDb = userRepository.findByPhoneNumber(userDTO.getPhoneNumber());
         Employee employeeFromDb = userFromDb.getEmployee();
-        if (bCryptPasswordEncoder.matches(user.getPasswordConfirmTransient(), userFromDb.getPassword())) {
-            userFromDb.setUsername(user.getUsername());
+        if (bCryptPasswordEncoder.matches(userDTO.getPassword(), userFromDb.getPassword())) {
+            userFromDb.setPhoneNumber(userDTO.getPhoneNumber());
 
-            employeeFromDb.setDepartment(user.getEmployee().getDepartment());
-            employeeFromDb.setJob_title(user.getEmployee().getJob_title());
-            employeeFromDb.setName(user.getEmployee().getName());
-            employeeFromDb.setOtchestvo(user.getEmployee().getOtchestvo());
-            employeeFromDb.setSector(user.getEmployee().getSector());
-            employeeFromDb.setSurname(user.getEmployee().getSurname());
-            employeeFromDb.setWork_center(user.getEmployee().getWork_center());
-            employeeFromDb.setLogin_phone(user.getUsername());
+            employeeFromDb.setDepartment(userDTO.getDepartment());
+            employeeFromDb.setJobTitle(userDTO.getJobTitle());
+            employeeFromDb.setName(userDTO.getName());
+            employeeFromDb.setOtchestvo(userDTO.getOtchestvo());
+            employeeFromDb.setSector(userDTO.getSector());
+            employeeFromDb.setSurname(userDTO.getSurname());
+            employeeFromDb.setWorkCenter(userDTO.getWorkCenter());
+            employeeFromDb.setPhoneNumber(userDTO.getPhoneNumber());
 
             userRepository.save(userFromDb);
             return true;
@@ -85,7 +99,7 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
-    public boolean uniqueUser(User user){
-        return userRepository.findByUsername(user.getUsername()) == null;
+    public boolean uniqueUser(UserDTO userDTO){
+        return userRepository.findByPhoneNumber(userDTO.getPhoneNumber()) == null;
     }
 }

@@ -20,7 +20,7 @@
             flex-grow: 1;
             padding: 20px;
         }
-        .user-info, .orders-list, .find-orders-list {
+        .user-info, .orders-list, .find-orders-list{
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -136,9 +136,10 @@
     <a href="#" class="btn" th:href="@{/orderRedactor}">создать наряд</a>
     <a href="#" class="btn red" th:href="@{/logout}">Выход из сессии</a>
 </div>
+
 <div class="toggle-block" id="toggle-block"
      th:attr="style=${findOrders != null} ? 'display: block;' : 'display: none;'">
-    <form th:action="@{/employee/findOrder}" method="get">
+    <form th:action="@{/employee/findOrderOTKController}" method="get">
         <div class="input-field">
             <input type="text" class="datepicker" id="date" name="date" required>
             <label for="date">Выбор даты</label>
@@ -150,6 +151,15 @@
             </select>
             <label for="shift">Выбор смены</label>
         </div>
+        <div class="input-field">
+            <input type="text" class="text" id="surname" name="surname" required>
+            <label for="surname">Фамилия работника</label>
+        </div>
+        <div class="input-field">
+            <input type="text" class="text" id="name" name="name" required>
+            <label for="name">Имя работника</label>
+        </div>
+
         <div class="edit-button">
             <button type="submit" class="btn center">Найти наряд</button>
         </div>
@@ -164,7 +174,8 @@
         </ul>
     </div>
 </div>
-<div class="container" th:object="${employee}">
+
+<div class="container" th:object="${otkController}">
     <div class="user-info">
         <h5>Данные о сотруднике</h5>
         <div class="employee-data">
@@ -173,19 +184,18 @@
             <p>Фамилия: <span th:text="*{surname}"></span></p>
             <p>Цех: <span th:text="*{department}"></span></p>
             <p>Участок: <span th:text="*{sector}"></span></p>
-            <p>Рабочий центр: <span th:text="*{workCenter}"></span></p>
-            <p>Должность: <span th:text="*{jobTitle}"></span></p>
+            <p>Рабочий центр: <span th:text="*{work_center}"></span></p>
+            <p>Должность: <span th:text="*{job_title}"></span></p>
         </div>
         <div class="edit-button">
             <a href="#" class="btn" th:href="@{/employee/profileEditor}">Редактировать данные</a>
         </div>
     </div>
     <div class="orders-list">
-        <h5>Список последних нарядов</h5>
+        <h5>Список нарядов на проверку</h5>
         <ul class="scrollable-list">
             <li th:each="order : ${orders}">
-                <a th:href="@{/order/{id}(id=${order.orderId})}"
-                   th:text="${order.date}+' Смена № '+${order.workShift}"></a>
+                <a th:href="@{/order/{id}(id=${order.orderId})}" th:text="${order.date}+' '+${order.employee.name}+' '+${order.employee.surname}"></a>
             </li>
         </ul>
     </div>
